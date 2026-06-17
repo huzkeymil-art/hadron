@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #0a0a0a;
+  --bone: #f4f1ea;
+  --ember: #ff3d00;
+  --line: rgba(244, 241, 234, 0.12);
+  --gutter: clamp(1.25rem, 4vw, 4rem);
+}
+
+@layer base {
+  * {
+    @apply border-bone/10;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: auto; /* Lenis owns smooth scrolling */
+  }
+
+  body {
+    @apply bg-ink text-bone font-sans antialiased;
+    font-feature-settings: "ss01", "cv01", "kern";
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--ember);
+    color: #fff;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-sans font-extrabold tracking-tightest leading-[0.92];
+    text-wrap: balance;
+  }
+
+  /* Hide default cursor on devices that have a fine pointer (custom cursor takes over). */
+  @media (hover: hover) and (pointer: fine) {
+    body { cursor: none; }
+    a, button, [data-cursor] { cursor: none; }
+  }
+
+  /* Thin, brand-tinted scrollbar */
+  ::-webkit-scrollbar { width: 9px; }
+  ::-webkit-scrollbar-track { background: #0a0a0a; }
+  ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 999px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--ember); }
+}
+
+@layer components {
+  /* Page gutter container used across sections */
+  .shell {
+    @apply mx-auto w-full max-w-[1600px] px-[var(--gutter)];
+  }
+
+  /* Monospace eyebrow label */
+  .eyebrow {
+    @apply font-mono text-[0.7rem] uppercase tracking-[0.28em] text-bone/55;
+  }
+
+  .hairline {
+    @apply h-px w-full bg-bone/10;
+  }
+
+  /* The big Swiss display headline */
+  .display {
+    @apply font-extrabold uppercase tracking-tightest leading-[0.86];
+  }
+
+  /* Outline / stroke text used for oversized background type */
+  .stroke-text {
+    -webkit-text-stroke: 1px rgba(244, 241, 234, 0.35);
+    color: transparent;
+  }
+
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    transition: background-size 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .link-underline:hover {
+    background-size: 100% 1px;
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+
+  /* Film-grain noise overlay (used by <Grain />) */
+  .grain {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* mask used to fade marquees at the edges */
+  .edge-fade {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+}
+
+/* Respect reduced-motion: kill transforms/animations for those who ask. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
