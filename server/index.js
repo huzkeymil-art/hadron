@@ -7,6 +7,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { projects, services, pricing, stats } from "./content.js";
+import { validateContact, deliver } from "./contact-handler.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const isProd = process.env.NODE_ENV === "production";
@@ -63,51 +64,17 @@ api.get("/services", (_req, res) => res.json({ ok: true, data: services }));
 api.get("/pricing", (_req, res) => res.json({ ok: true, data: pricing }));
 api.get("/stats", (_req, res) => res.json({ ok: true, data: stats }));
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 api.post("/contact", rateLimit, async (req, res) => {
-  const { name, email, company, budget, message, _hp } = req.body ?? {};
+  const result = validateContact(req.body ?? {});
+  if (result.honeypot) return res.json({ ok: true, queued: true });
+  if (result.errors) return res.status(422).json({ ok: false, errors: result.errors });
 
-  // Honeypot — bots fill hidden fields, humans don't.
-  if (_hp) return res.json({ ok: true, queued: true });
-
-  const errors = {};
-  if (!name || String(name).trim().length < 2) errors.name = "Please tell us your name.";
-  if (!email || !EMAIL_RE.test(String(email))) errors.email = "A valid email is required.";
-  if (!message || String(message).trim().length < 10)
-    errors.message = "A little more detail helps us scope your project.";
-
-  if (Object.keys(errors).length) {
-    return res.status(422).json({ ok: false, errors });
-  }
-
-  const submission = {
-    id: `hs_${Date.now().toString(36)}`,
-    name: String(name).trim(),
-    email: String(email).trim(),
-    company: company ? String(company).trim() : null,
-    budget: budget ? String(budget).trim() : null,
-    message: String(message).trim(),
-    receivedAt: new Date().toISOString(),
-    ip: req.ip,
-  };
-
-  // Forward to a webhook if configured, otherwise log it server-side.
-  if (process.env.CONTACT_WEBHOOK_URL) {
-    try {
-      await fetch(process.env.CONTACT_WEBHOOK_URL, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(submission),
-      });
-    } catch (err) {
-      console.error("[contact] webhook delivery failed:", err.message);
-    }
-  } else {
-    console.log("[contact] new enquiry:", JSON.stringify(submission, null, 2));
-  }
-
-  res.json({ ok: true, id: submission.id, message: "Thanks — we'll be in touch within 24 hours." });
+  await deliver({ ...result.submission, ip: req.ip });
+  res.json({
+    ok: true,
+    id: result.submission.id,
+    message: "Thanks — we'll be in touch within 24 hours.",
+  });
 });
 
 app.use("/api", api);
