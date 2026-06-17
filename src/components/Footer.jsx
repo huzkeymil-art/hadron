@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { nav, studio } from "../data/content.js";
 import { LogoMark } from "./Logo.jsx";
 import { Clock } from "./Clock.jsx";
@@ -17,21 +18,21 @@ export function Footer() {
             <p className="mt-5 text-pretty leading-relaxed text-bone/55">
               A design & engineering studio building high-impact websites for ambitious brands. Strategy, design and code under one roof.
             </p>
-            <a
-              href="#contact"
+            <Link
+              to="/#contact"
               data-cursor
               className="mt-7 inline-flex items-center gap-2 rounded-full bg-bone px-5 py-3 text-sm font-semibold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ember hover:text-white"
             >
               Start a project →
-            </a>
+            </Link>
           </div>
 
           <nav className="flex flex-col gap-3">
             <span className="eyebrow mb-2">Sitemap</span>
             {nav.map((n) => (
-              <a key={n.href} href={n.href} data-cursor className="link-underline w-fit text-bone/75 hover:text-bone">
+              <Link key={n.to} to={n.to} data-cursor className="link-underline w-fit text-bone/75 hover:text-bone">
                 {n.label}
-              </a>
+              </Link>
             ))}
           </nav>
 

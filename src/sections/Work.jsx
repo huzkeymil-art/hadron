@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
-import { projects } from "../data/content.js";
+import { projects } from "../data/projects.js";
 import { RevealText } from "../components/Reveal.jsx";
 import { useHasPointer } from "../hooks/useMediaQuery.js";
 
@@ -31,9 +32,9 @@ export function Work() {
 
         <ul className="relative">
           {projects.map((p, i) => (
-            <li key={p.id}>
-              <a
-                href="#contact"
+            <li key={p.slug}>
+              <Link
+                to={`/work/${p.slug}`}
                 data-cursor="View"
                 onMouseEnter={() => setActive(i)}
                 onMouseLeave={() => setActive(null)}
@@ -57,19 +58,19 @@ export function Work() {
                 <span className="col-start-2 flex flex-wrap gap-x-3 gap-y-1 md:col-start-4 md:justify-end">
                   <span className="font-mono text-xs text-bone/45">{p.year}</span>
                 </span>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
 
         <div className="mt-10">
-          <a
-            href="#contact"
+          <Link
+            to="/work"
             data-cursor
             className="link-underline font-mono text-xs uppercase tracking-[0.18em] text-bone/70 hover:text-bone"
           >
-            Start your case study →
-          </a>
+            View all work →
+          </Link>
         </div>
       </div>
 
@@ -90,14 +91,14 @@ export function Work() {
                 className="relative h-full w-full"
               >
                 <img
-                  src={projects[active].image}
+                  src={projects[active].cover}
                   alt={projects[active].client}
                   loading="lazy"
                   className="h-full w-full object-cover"
                 />
                 <div className="absolute inset-0 bg-ink/20" />
                 <div className="absolute bottom-3 left-3 flex flex-wrap gap-2">
-                  {projects[active].scope.map((s) => (
+                  {projects[active].role.map((s) => (
                     <span
                       key={s}
                       className="rounded-full bg-ink/70 px-2.5 py-1 font-mono text-[0.6rem] uppercase tracking-[0.15em] text-bone backdrop-blur"

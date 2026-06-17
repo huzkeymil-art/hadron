@@ -16,11 +16,11 @@ export const studio = {
 };
 
 export const nav = [
-  { label: "Work", href: "#work" },
-  { label: "Services", href: "#services" },
-  { label: "Studio", href: "#studio" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Contact", href: "#contact" },
+  { label: "Work", to: "/work" },
+  { label: "Services", to: "/#services" },
+  { label: "Pricing", to: "/#pricing" },
+  { label: "Journal", to: "/journal" },
+  { label: "Contact", to: "/#contact" },
 ];
 
 export const hero = {
@@ -65,74 +65,10 @@ export const services = [
   },
 ];
 
-export const projects = [
-  {
-    id: "outside",
-    client: "Outside",
-    title: "An editorial flagship for the outdoor set",
-    year: "2025",
-    scope: ["Brand", "Site", "Motion"],
-    category: "Editorial",
-    accent: "#ff3d00",
-    image:
-      "https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=1400&q=80",
-  },
-  {
-    id: "juvede",
-    client: "Juvédé",
-    title: "A 3D-led storefront with a 41% lift in AOV",
-    year: "2025",
-    scope: ["E-commerce", "3D", "Design system"],
-    category: "Commerce",
-    accent: "#d9c7a3",
-    image:
-      "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=1400&q=80",
-  },
-  {
-    id: "zaine",
-    client: "Zaine",
-    title: "A product platform that scaled to 160k MAU",
-    year: "2024",
-    scope: ["Product", "Design system"],
-    category: "Platform",
-    accent: "#7c8cff",
-    image:
-      "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?auto=format&fit=crop&w=1400&q=80",
-  },
-  {
-    id: "wallout",
-    client: "Wall Out",
-    title: "A WebGL campaign that broke launch records",
-    year: "2024",
-    scope: ["Campaign", "WebGL"],
-    category: "Experience",
-    accent: "#ff3d00",
-    image:
-      "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1400&q=80",
-  },
-  {
-    id: "geaton",
-    client: "Geaton",
-    title: "An identity and site for a quiet luxury house",
-    year: "2024",
-    scope: ["Identity", "Site"],
-    category: "Editorial",
-    accent: "#9fb2a1",
-    image:
-      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1400&q=80",
-  },
-  {
-    id: "skate",
-    client: "Skate Dept.",
-    title: "A commerce brand built to be screenshotted",
-    year: "2023",
-    scope: ["Brand", "Commerce"],
-    category: "Commerce",
-    accent: "#ff7a00",
-    image:
-      "https://images.unsplash.com/photo-1520975954732-35dd22299614?auto=format&fit=crop&w=1400&q=80",
-  },
-];
+// Project case studies live in ./projects.js; articles live in ./journal.js.
+// Re-exported here so existing imports keep working.
+export { projects } from "./projects.js";
+export { journal } from "./journal.js";
 
 export const process = [
   { k: "01", title: "Discover", body: "Workshops, audits and a sharp brief. We align on the single metric that matters." },
@@ -229,10 +165,4 @@ export const faqs = [
     q: "What does a project need from us?",
     a: "A decision-maker who can give feedback in one voice, your brand assets, and content (we can help shape it). The tighter the feedback loop, the faster the ship date.",
   },
-];
-
-export const journal = [
-  { tag: "Engineering", title: "How we built a 90fps WebGL hero that still scores 98 on mobile", date: "May 2026" },
-  { tag: "Craft", title: "Type at scale: the grid system behind every Hadron site", date: "Apr 2026" },
-  { tag: "Studio", title: "Why we quote fixed-price, and how it keeps projects honest", date: "Mar 2026" },
 ];

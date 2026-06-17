@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { nav, studio } from "../data/content.js";
 import { Logo } from "./Logo.jsx";
@@ -48,28 +49,28 @@ export function Navbar() {
 
             <nav className="hidden items-center gap-9 md:flex">
               {nav.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
+                <Link
+                  key={item.to}
+                  to={item.to}
                   data-cursor
                   className="link-underline font-mono text-[0.72rem] uppercase tracking-[0.16em] text-bone/75 hover:text-bone"
                 >
                   {item.label}
-                </a>
+                </Link>
               ))}
             </nav>
 
             <div className="flex items-center gap-5">
               <Clock className="hidden font-mono text-[0.72rem] uppercase tracking-[0.12em] text-bone/70 lg:inline" />
               <Magnetic className="hidden sm:block">
-                <a
-                  href="#contact"
+                <Link
+                  to="/#contact"
                   data-cursor
                   className="group inline-flex items-center gap-2 rounded-full bg-ember px-5 py-2.5 text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-white"
                 >
                   Start a project
                   <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
-                </a>
+                </Link>
               </Magnetic>
 
               <button
@@ -113,9 +114,9 @@ function Overlay({ open, onClose }) {
             <span className="eyebrow mb-8">Menu — where to?</span>
             <nav className="flex flex-col">
               {nav.map((item, i) => (
-                <a
-                  key={item.href}
-                  href={item.href}
+                <Link
+                  key={item.to}
+                  to={item.to}
                   onClick={onClose}
                   data-cursor
                   className="group flex items-baseline gap-5 border-b border-bone/10 py-3"
@@ -132,7 +133,7 @@ function Overlay({ open, onClose }) {
                   <span className="ml-auto translate-y-[-0.4em] text-bone/30 opacity-0 transition group-hover:translate-x-2 group-hover:opacity-100">
                     ↗
                   </span>
-                </a>
+                </Link>
               ))}
             </nav>
 

@@ -12,26 +12,31 @@ backend. Built to convert ambitious brands into clients.
 
 ## ✦ Highlights
 
-- **Real-time 3D hero** — a distorted "hadron" core with orbital rings (an echo of
-  the atom logo), drifting shards, mouse parallax and ember lighting, rendered with
-  **Three.js / React Three Fiber** and lazy-loaded so it never blocks first paint.
-- **Cinematic motion** — preloader counter, masked text reveals, magnetic buttons,
-  a custom morphing cursor, infinite marquees and scroll-driven animation via
-  **Framer Motion** + **Lenis** smooth scroll.
-- **Twelve crafted sections** — hero, manifesto, services, selected work (with a
-  cursor-following preview), process, animated stats, pricing, testimonials,
-  client marquee, FAQ, journal and a working contact flow.
-- **A real Node backend** — an **Express** API that serves the built site, exposes
-  content endpoints, and validates contact submissions with rate-limiting and a
-  honeypot.
-- **Accessible & fast** — respects `prefers-reduced-motion`, semantic markup,
-  fluid Swiss type, code-split bundles, and a ~98 Lighthouse target.
+- **A real multi-page site** — client-side routing (React Router) with a home page,
+  a `/work` index, full **case-study pages** at `/work/:slug`, a `/journal` index and
+  **long-form articles** at `/journal/:slug`. Lenis-aware scroll restoration and
+  cross-page hash navigation.
+- **Distinct 3D per project** — every case study gets its own hyper-clean WebGL
+  hero (a glossy knot, a faceted crystal, a particle field, a distorted prism, a
+  morphing blob, orbital rings), recoloured to the project's accent and lazy-loaded
+  with a graceful static fallback.
+- **Real-time 3D home hero** — a distorted "hadron" core with orbital rings (an echo
+  of the atom logo), drifting shards, mouse parallax and ember lighting, rendered
+  with **Three.js / React Three Fiber**.
+- **Cinematic motion** — preloader counter, masked text reveals, magnetic buttons, a
+  custom morphing cursor, infinite marquees, scroll-linked cover/gallery parallax and
+  animated metric counters via **Framer Motion** + **Lenis** smooth scroll.
+- **A real Node backend** — an **Express** API that serves the built site and mirrors
+  every page: content, case studies, articles, and a rate-limited, honeypot-protected
+  contact endpoint. Deploys to Node *or* to Vercel via an equivalent serverless function.
+- **Accessible & fast** — skip link, visible focus, `prefers-reduced-motion`
+  fallbacks, graceful image loading, code-split bundles, and a ~98 Lighthouse target.
 
 ## ✦ Tech stack
 
 | Layer        | Tools                                                            |
 | ------------ | --------------------------------------------------------------- |
-| Front-end    | React 18, Vite 5                                                 |
+| Front-end    | React 18, Vite 5, React Router 6                                |
 | 3D / WebGL   | Three.js, @react-three/fiber, @react-three/drei                 |
 | Motion       | Framer Motion, Lenis (smooth scroll)                            |
 | Styling      | Tailwind CSS (custom Swiss design tokens)                       |
@@ -65,43 +70,64 @@ npm run serve         # = npm run build && npm start
 | `npm run serve`   | Build, then start                                        |
 | `npm run lint`    | ESLint, zero-warnings                                    |
 
+## ✦ Pages
+
+| Route             | Page                                                      |
+| ----------------- | --------------------------------------------------------- |
+| `/`               | Home — all marketing sections                             |
+| `/work`           | Index of every case study                                 |
+| `/work/:slug`     | Full case study — 3D hero, narrative, metrics, gallery    |
+| `/journal`        | Index of all articles                                     |
+| `/journal/:slug`  | Long-form article                                         |
+| `*`               | 404                                                       |
+
 ## ✦ Project structure
 
 ```
 hadron-studio/
 ├── server/
-│   ├── index.js        # Express app — serves dist + /api + contact handling
-│   └── content.js      # structured content served by the API
+│   ├── index.js          # Express app — serves dist + /api + contact
+│   ├── content.js        # home content served by the API
+│   ├── catalog.js        # case-study + article data (shared with the UI)
+│   └── contact-handler.js# validation/delivery shared with the serverless fn
 ├── src/
-│   ├── three/          # React Three Fiber hero scene
-│   ├── components/     # cursor, grain, preloader, navbar, marquee, reveal…
-│   ├── sections/       # the 12 page sections
-│   ├── hooks/          # Lenis smooth scroll, media queries
-│   ├── data/content.js # single source of truth for all copy
-│   ├── App.jsx
-│   └── index.css       # Tailwind layers + design tokens
+│   ├── three/            # ProjectScene (per-project 3D variants) + home hero
+│   ├── components/       # cursor, grain, preloader, navbar, media, reveal…
+│   ├── sections/         # the homepage sections
+│   ├── pages/            # Home, WorkIndex, ProjectPage, JournalIndex, Article…
+│   ├── hooks/            # Lenis smooth scroll, media queries
+│   ├── data/             # content.js · projects.js · journal.js
+│   ├── App.jsx           # router shell + persistent chrome
+│   └── index.css         # Tailwind layers + design tokens
 └── vite.config.js
 ```
 
+> The repo-root `/api/[...slug].js` + `/vercel.json` deploy the same backend as a
+> Vercel serverless function.
+
 ## ✦ The Node API
 
-| Method | Route            | Purpose                                              |
-| ------ | ---------------- | --------------------------------------------------- |
-| GET    | `/api/health`    | Liveness / uptime                                   |
-| GET    | `/api/projects`  | Portfolio records                                   |
-| GET    | `/api/services`  | Service offerings                                   |
-| GET    | `/api/pricing`   | Pricing tiers                                        |
-| GET    | `/api/stats`     | Headline numbers                                     |
-| POST   | `/api/contact`   | Validated enquiries (rate-limited + honeypot)        |
+| Method | Route              | Purpose                                            |
+| ------ | ------------------ | -------------------------------------------------- |
+| GET    | `/api/health`      | Liveness / uptime                                  |
+| GET    | `/api/work`        | All case studies (summaries)                       |
+| GET    | `/api/work/:slug`  | One full case study                                |
+| GET    | `/api/journal`     | All articles (summaries)                           |
+| GET    | `/api/journal/:slug`| One full article                                  |
+| GET    | `/api/services`    | Service offerings                                  |
+| GET    | `/api/pricing`     | Pricing tiers                                       |
+| GET    | `/api/stats`       | Headline numbers                                    |
+| POST   | `/api/contact`     | Validated enquiries (rate-limited + honeypot)       |
 
 Set `CONTACT_WEBHOOK_URL` (see `.env.example`) to forward submissions to Slack,
 a CRM, or an email service; otherwise they're logged server-side.
 
 ## ✦ Make it yours
 
-Almost everything is data-driven. Edit **`src/data/content.js`** to change copy,
-projects, pricing, testimonials and FAQs — no component edits required. Brand
-colours and the type scale live in **`tailwind.config.js`**.
+Almost everything is data-driven. Edit **`src/data/content.js`** for homepage copy,
+**`src/data/projects.js`** for case studies, and **`src/data/journal.js`** for
+articles — no component edits required. Brand colours and the type scale live in
+**`tailwind.config.js`**.
 
 ## ✦ Deploy
 

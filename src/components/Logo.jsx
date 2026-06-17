@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 /** Hadron wordmark + geometric "atom" mark. */
 export function LogoMark({ className }) {
   return (
@@ -28,8 +30,8 @@ export function LogoMark({ className }) {
 
 export function Logo({ className }) {
   return (
-    <a
-      href="#top"
+    <Link
+      to="/"
       data-cursor
       className={`group flex items-center gap-2.5 ${className ?? ""}`}
       aria-label="Hadron Studio — home"
@@ -38,6 +40,6 @@ export function Logo({ className }) {
       <span className="text-[1.05rem] font-extrabold uppercase tracking-tight leading-none">
         Hadron<span className="text-ember">®</span>
       </span>
-    </a>
+    </Link>
   );
 }

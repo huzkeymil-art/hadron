@@ -1,7 +1,11 @@
-import { journal } from "../data/content.js";
+import { Link } from "react-router-dom";
+import { journal } from "../data/journal.js";
 import { Reveal, RevealText } from "../components/Reveal.jsx";
 
 export function Journal() {
+  // Show the three most recent on the homepage.
+  const posts = journal.slice(0, 3);
+
   return (
     <section className="relative border-t border-bone/10 bg-ink-800">
       <div className="shell py-24 md:py-32">
@@ -9,16 +13,20 @@ export function Journal() {
           <h2 className="display text-display-sm">
             <RevealText text="Journal" />
           </h2>
-          <span className="hidden font-mono text-xs uppercase tracking-[0.2em] text-bone/50 md:block">
-            Notes from the studio
-          </span>
+          <Link
+            to="/journal"
+            data-cursor
+            className="link-underline hidden font-mono text-xs uppercase tracking-[0.2em] text-bone/60 hover:text-bone md:block"
+          >
+            All articles →
+          </Link>
         </div>
 
         <div className="grid gap-px overflow-hidden rounded-lg bg-bone/10 md:grid-cols-3">
-          {journal.map((post, i) => (
-            <Reveal key={i} delay={i * 0.08}>
-              <a
-                href="#contact"
+          {posts.map((post, i) => (
+            <Reveal key={post.slug} delay={i * 0.08}>
+              <Link
+                to={`/journal/${post.slug}`}
                 data-cursor="Read"
                 className="group flex h-full min-h-[18rem] flex-col justify-between bg-ink-800 p-7 transition-colors duration-500 hover:bg-ink-700"
               >
@@ -28,10 +36,13 @@ export function Journal() {
                   </span>
                   <span className="font-mono text-xs text-bone/40">{post.date}</span>
                 </div>
-                <h3 className="mt-10 text-pretty text-xl font-bold leading-snug transition-colors group-hover:text-ember">
-                  {post.title}
-                </h3>
-              </a>
+                <div className="mt-10">
+                  <h3 className="text-pretty text-xl font-bold leading-snug transition-colors group-hover:text-ember">
+                    {post.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-bone/50">{post.excerpt}</p>
+                </div>
+              </Link>
             </Reveal>
           ))}
         </div>

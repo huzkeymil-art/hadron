@@ -25,7 +25,10 @@ export default [
       // props (args, rotation, emissive…) that this rule can't know about.
       "react/no-unknown-property": "off",
       "react/no-unescaped-entities": "off",
-      "no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
+      "no-unused-vars": [
+        "warn",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_", ignoreRestSiblings: true },
+      ],
     },
   },
 ];
