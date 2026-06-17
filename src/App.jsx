@@ -14,6 +14,7 @@ import { Services } from "./sections/Services.jsx";
 import { Work } from "./sections/Work.jsx";
 import { Process } from "./sections/Process.jsx";
 import { Stats } from "./sections/Stats.jsx";
+import { Awards } from "./sections/Awards.jsx";
 import { Pricing } from "./sections/Pricing.jsx";
 import { Testimonials } from "./sections/Testimonials.jsx";
 import { Clients } from "./sections/Clients.jsx";
@@ -27,19 +28,23 @@ export default function App() {
 
   return (
     <>
+      <a href="#main-content" className="skip-link">
+        Skip to content
+      </a>
       <Preloader onDone={() => setLoaded(true)} />
       <Cursor />
       <Grain />
       <ScrollProgress />
       <Navbar />
 
-      <main className={loaded ? "opacity-100" : "opacity-0"}>
+      <main id="main-content" className={loaded ? "opacity-100" : "opacity-0"}>
         <Hero />
         <Manifesto />
         <Services />
         <Work />
         <Process />
         <Stats />
+        <Awards />
         <Clients />
         <Pricing />
         <Testimonials />

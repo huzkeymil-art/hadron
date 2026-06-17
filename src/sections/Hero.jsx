@@ -1,7 +1,10 @@
-import { lazy, Suspense } from "react";
-import { motion } from "framer-motion";
+import { lazy, Suspense, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { hero } from "../data/content.js";
 import { Marquee } from "../components/Marquee.jsx";
+import { ErrorBoundary } from "../components/ErrorBoundary.jsx";
+import { HeroFallback } from "../three/HeroFallback.jsx";
+import { isWebGLAvailable } from "../lib/utils.js";
 
 // Isolate the heavy Three.js bundle so it loads after first paint.
 const HeroScene = lazy(() => import("../three/HeroScene.jsx"));
@@ -9,13 +12,23 @@ const HeroScene = lazy(() => import("../three/HeroScene.jsx"));
 const EASE = [0.16, 1, 0.3, 1];
 
 export function Hero() {
+  const reduceMotion = useReducedMotion();
+  // Decide once, on the client, whether to mount the 3D scene at all.
+  const [use3D] = useState(() => !reduceMotion && isWebGLAvailable());
+
   return (
     <section id="top" className="relative min-h-[100svh] w-full overflow-hidden">
-      {/* 3D background */}
+      {/* 3D background (with graceful fallback) */}
       <div className="absolute inset-0">
-        <Suspense fallback={<div className="absolute inset-0 bg-ink" />}>
-          <HeroScene />
-        </Suspense>
+        {use3D ? (
+          <ErrorBoundary fallback={<HeroFallback />}>
+            <Suspense fallback={<HeroFallback />}>
+              <HeroScene />
+            </Suspense>
+          </ErrorBoundary>
+        ) : (
+          <HeroFallback />
+        )}
       </div>
 
       {/* Legibility vignette */}

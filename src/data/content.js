@@ -201,6 +201,13 @@ export const clients = [
   "Outside", "Juvédé", "Zaine", "Wall Out", "Geaton", "Skate Dept.", "Northbound", "Atelier 9", "Forma",
 ];
 
+export const awards = [
+  { name: "Awwwards", detail: "Site of the Day ×4", year: "2025" },
+  { name: "CSS Design Awards", detail: "Best UI / UX", year: "2025" },
+  { name: "FWA", detail: "Site of the Day", year: "2024" },
+  { name: "Webby", detail: "Honoree", year: "2024" },
+];
+
 export const faqs = [
   {
     q: "How long does a typical project take?",

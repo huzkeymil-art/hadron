@@ -33,6 +33,32 @@
     color: #fff;
   }
 
+  /* Keyboard focus must stay visible even with the custom cursor active. */
+  :focus-visible {
+    outline: 2px solid var(--ember);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Skip-to-content link — revealed on keyboard focus. */
+  .skip-link {
+    position: fixed;
+    left: 1rem;
+    top: -120px;
+    z-index: 130;
+    background: var(--ember);
+    color: #fff;
+    padding: 0.65rem 1.1rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: top 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .skip-link:focus {
+    top: 1rem;
+  }
+
   h1, h2, h3, h4 {
     @apply font-sans font-extrabold tracking-tightest leading-[0.92];
     text-wrap: balance;
