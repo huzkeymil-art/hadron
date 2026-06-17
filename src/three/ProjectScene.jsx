@@ -1,6 +1,7 @@
 import { Suspense, useMemo, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { MeshDistortMaterial, Float } from "@react-three/drei";
+import { useCanvasActive, isCompactViewport } from "../hooks/useCanvasActive.js";
 
 /* Smoothly tracked, normalised pointer shared by every variant. */
 function useParallax(ref, factor = 0.3) {
@@ -89,7 +90,8 @@ function Rings({ color }) {
 
 function ParticleField({ color }) {
   const ref = useRef();
-  const count = 1400;
+  // Fewer points on small screens — imperceptible there, much lighter.
+  const count = isCompactViewport() ? 800 : 1400;
   const positions = useMemo(() => {
     const arr = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
@@ -102,7 +104,7 @@ function ParticleField({ color }) {
       arr[i * 3 + 2] = r * Math.cos(phi);
     }
     return arr;
-  }, []);
+  }, [count]);
   useFrame((state, delta) => {
     if (!ref.current) return;
     ref.current.rotation.y += delta * 0.12;
@@ -141,16 +143,21 @@ function Scene({ variant, color }) {
 }
 
 export default function ProjectScene({ variant = "sphere", color = "#ff3d00" }) {
+  const wrap = useRef(null);
+  const active = useCanvasActive(wrap);
+
   return (
-    <Canvas
-      className="!absolute inset-0"
-      dpr={[1, 1.7]}
-      gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-      camera={{ position: [0, 0, 6], fov: 40 }}
-    >
-      <Suspense fallback={null}>
-        <Scene variant={variant} color={color} />
-      </Suspense>
-    </Canvas>
+    <div ref={wrap} className="absolute inset-0">
+      <Canvas
+        frameloop={active ? "always" : "never"}
+        dpr={[1, Math.min(typeof window !== "undefined" ? window.devicePixelRatio : 2, 2)]}
+        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        camera={{ position: [0, 0, 6], fov: 40 }}
+      >
+        <Suspense fallback={null}>
+          <Scene variant={variant} color={color} />
+        </Suspense>
+      </Canvas>
+    </div>
   );
 }

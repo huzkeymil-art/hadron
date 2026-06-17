@@ -3,12 +3,14 @@ import { motion } from "framer-motion";
 import { projects } from "../data/projects.js";
 import { RevealText, Reveal } from "../components/Reveal.jsx";
 import { Media } from "../components/Media.jsx";
+import { Seo } from "../components/Seo.jsx";
 
 const EASE = [0.16, 1, 0.3, 1];
 
 export function WorkIndex() {
   return (
     <div className="bg-ink">
+      <Seo title="Work" description="Selected case studies from Hadron Studio — strategy, design and engineering for ambitious brands." />
       {/* Header */}
       <header className="shell pb-12 pt-36 md:pt-44">
         <span className="eyebrow mb-6 block">Selected work — 2023–2026</span>

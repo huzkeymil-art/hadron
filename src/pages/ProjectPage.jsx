@@ -1,13 +1,14 @@
 import { lazy, Suspense, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import { projectBySlug, nextProject } from "../data/projects.js";
+import { projectBySlug, nextProject, signatures, secondaryScene } from "../data/projects.js";
 import { AnimatedCounter } from "../components/AnimatedCounter.jsx";
 import { Reveal } from "../components/Reveal.jsx";
 import { Media } from "../components/Media.jsx";
 import { Magnetic } from "../components/Magnetic.jsx";
 import { ErrorBoundary } from "../components/ErrorBoundary.jsx";
 import { HeroFallback } from "../three/HeroFallback.jsx";
+import { Seo } from "../components/Seo.jsx";
 import { isWebGLAvailable } from "../lib/utils.js";
 import { NotFound } from "./NotFound.jsx";
 
@@ -31,6 +32,13 @@ export function ProjectPage() {
 
   return (
     <article className="bg-ink">
+      <Seo
+        title={`${project.client} — ${project.category}`}
+        description={project.subtitle}
+        image={project.cover}
+        type="article"
+      />
+
       {/* ── Hero ─────────────────────────────────────────────── */}
       <header className="relative flex min-h-[100svh] flex-col overflow-hidden">
         <div className="absolute inset-0">
@@ -148,6 +156,29 @@ export function ProjectPage() {
             <p className="text-pretty leading-relaxed text-bone/70">{b.v}</p>
           </Reveal>
         ))}
+      </section>
+
+      {/* ── Signature 3D band ────────────────────────────────── */}
+      <section className="relative my-8 flex min-h-[80svh] items-center overflow-hidden border-y border-bone/10">
+        <div className="absolute inset-0">
+          {use3D ? (
+            <ErrorBoundary fallback={<HeroFallback color={project.accent} />}>
+              <Suspense fallback={<HeroFallback color={project.accent} />}>
+                <ProjectScene variant={secondaryScene[project.scene.variant] ?? "sphere"} color={project.accent} />
+              </Suspense>
+            </ErrorBoundary>
+          ) : (
+            <HeroFallback color={project.accent} />
+          )}
+        </div>
+        <div className="pointer-events-none absolute inset-0 bg-ink/40" />
+        <div className="shell relative">
+          <Reveal>
+            <p className="max-w-[16ch] text-balance text-[clamp(2rem,6vw,5rem)] font-extrabold leading-[0.95] tracking-tight">
+              {signatures[project.slug] ?? project.subtitle}
+            </p>
+          </Reveal>
+        </div>
       </section>
 
       {/* ── Metrics ──────────────────────────────────────────── */}

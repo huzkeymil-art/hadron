@@ -17,6 +17,7 @@ export const studio = {
 
 export const nav = [
   { label: "Work", to: "/work" },
+  { label: "Studio", to: "/studio" },
   { label: "Services", to: "/#services" },
   { label: "Pricing", to: "/#pricing" },
   { label: "Journal", to: "/journal" },
@@ -166,3 +167,42 @@ export const faqs = [
     a: "A decision-maker who can give feedback in one voice, your brand assets, and content (we can help shape it). The tighter the feedback loop, the faster the ship date.",
   },
 ];
+
+export const values = [
+  { k: "Senior, always", body: "No juniors learning on your budget. The people who scope the work are the people who ship it." },
+  { k: "Strategy before pixels", body: "We earn the right to design by understanding the business first. Pretty that doesn't perform is just expensive." },
+  { k: "Performance is a feature", body: "Fast is part of the brief, not an afterthought. We budget for it from day one and defend it to launch." },
+  { k: "Ship, then sharpen", body: "We get something real in front of people quickly, then refine against reality instead of opinion." },
+];
+
+export const team = [
+  {
+    name: "Priya Raman",
+    role: "Studio Principal",
+    bio: "Sets the strategy and keeps every engagement honest. Fifteen years turning fuzzy briefs into sharp products.",
+    photo: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    name: "Noa Brandt",
+    role: "Design Director",
+    bio: "Owns the look and the feel — type, grid, motion. Believes restraint is the hardest design skill.",
+    photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    name: "Eli Mercer",
+    role: "Lead Engineer",
+    bio: "Writes the React, Three.js and shaders. Obsessed with shipping 3D that still scores 98 on a phone.",
+    photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    name: "Dana Okafor",
+    role: "Producer",
+    bio: "Keeps timelines tight and feedback flowing. The reason projects ship on the date we promised.",
+    photo: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=800&q=80",
+  },
+];
+
+export const studioStory = {
+  lead: "Hadron is a small studio by design. We stay senior, take on a handful of projects at a time, and put the people who do the work in the room with you.",
+  body: "We started in 2018, tired of agencies that sold strategy decks and outsourced the build. So we made the opposite: one team that owns the whole arc — positioning, art direction, and production engineering — and is measured on whether the thing actually performs. No translation tax, no telephone game, no hand-off cliff.",
+};

@@ -76,10 +76,22 @@ npm run serve         # = npm run build && npm start
 | ----------------- | --------------------------------------------------------- |
 | `/`               | Home — all marketing sections                             |
 | `/work`           | Index of every case study                                 |
-| `/work/:slug`     | Full case study — 3D hero, narrative, metrics, gallery    |
+| `/work/:slug`     | Full case study — 3D hero + in-page 3D, metrics, gallery  |
+| `/studio`         | About the studio — story, values, team, process           |
 | `/journal`        | Index of all articles                                     |
 | `/journal/:slug`  | Long-form article                                         |
 | `*`               | 404                                                       |
+
+Each route sets its own title + Open Graph / Twitter tags (per-project and
+per-article share images) via a client-side `<Seo>` component.
+
+### Performance
+
+3D scenes pause their render loop when scrolled offscreen or when the tab is
+hidden (IntersectionObserver + Page Visibility), cap device-pixel-ratio at 2,
+and thin particle density on compact viewports — so it stays smooth on phones
+with no loss of visible quality. Reduced-motion and no-WebGL visitors get a
+static hero. The Three.js bundle is code-split and lazy-loaded.
 
 ## ✦ Project structure
 

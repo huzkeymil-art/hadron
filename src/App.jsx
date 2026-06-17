@@ -15,6 +15,7 @@ import { WorkIndex } from "./pages/WorkIndex.jsx";
 import { ProjectPage } from "./pages/ProjectPage.jsx";
 import { JournalIndex } from "./pages/JournalIndex.jsx";
 import { ArticlePage } from "./pages/ArticlePage.jsx";
+import { StudioPage } from "./pages/StudioPage.jsx";
 import { NotFound } from "./pages/NotFound.jsx";
 
 export default function App() {
@@ -38,6 +39,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/work" element={<WorkIndex />} />
           <Route path="/work/:slug" element={<ProjectPage />} />
+          <Route path="/studio" element={<StudioPage />} />
           <Route path="/journal" element={<JournalIndex />} />
           <Route path="/journal/:slug" element={<ArticlePage />} />
           <Route path="*" element={<NotFound />} />

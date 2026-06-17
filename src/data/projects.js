@@ -257,6 +257,26 @@ export const projects = [
   },
 ];
 
+// Short pull-quotes for the in-page "signature" 3D band on each case study.
+export const signatures = {
+  outside: "Journalism, finally faster than the scroll.",
+  juvede: "When the product is the hero, the page sells itself.",
+  zaine: "One system. Every page on-brand, in hours.",
+  wallout: "A launch that felt like an event.",
+  geaton: "Quiet, precise, and built to last.",
+  "skate-dept": "Every frame, a reason to repost.",
+};
+
+// Each case study gets a second, complementary 3D variant mid-page for variety.
+export const secondaryScene = {
+  knot: "rings",
+  crystal: "prism",
+  particles: "sphere",
+  prism: "crystal",
+  sphere: "particles",
+  rings: "knot",
+};
+
 /** Lookup helpers used by pages. */
 export const projectBySlug = (slug) => projects.find((p) => p.slug === slug);
 export const nextProject = (slug) => {

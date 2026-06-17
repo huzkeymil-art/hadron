@@ -1,3 +1,4 @@
+import { Seo } from "../components/Seo.jsx";
 import { Hero } from "../sections/Hero.jsx";
 import { Manifesto } from "../sections/Manifesto.jsx";
 import { Services } from "../sections/Services.jsx";
@@ -15,6 +16,7 @@ import { Contact } from "../sections/Contact.jsx";
 export function Home() {
   return (
     <>
+      <Seo description="Hadron is a small, senior design & engineering studio building high-impact, performance-obsessed websites for ambitious brands." />
       <Hero />
       <Manifesto />
       <Services />

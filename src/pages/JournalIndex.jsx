@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { journal } from "../data/journal.js";
 import { RevealText, Reveal } from "../components/Reveal.jsx";
 import { Media } from "../components/Media.jsx";
+import { Seo } from "../components/Seo.jsx";
 
 const EASE = [0.16, 1, 0.3, 1];
 
@@ -11,6 +12,7 @@ export function JournalIndex() {
 
   return (
     <div className="bg-ink">
+      <Seo title="Journal" description="Essays on craft, engineering and how we run the studio — from the Hadron team." />
       <header className="shell pb-12 pt-36 md:pt-44">
         <span className="eyebrow mb-6 block">Journal — notes from the studio</span>
         <h1 className="display text-display-sm md:text-display">

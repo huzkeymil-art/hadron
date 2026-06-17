@@ -2,6 +2,7 @@ import { Suspense, useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { MeshDistortMaterial, Float } from "@react-three/drei";
 import * as THREE from "three";
+import { useCanvasActive, isCompactViewport } from "../hooks/useCanvasActive.js";
 
 /* The distorted core — a dark, glossy "hadron" that breathes and warps. */
 function Core({ pointer }) {
@@ -73,9 +74,8 @@ function Rings({ pointer }) {
 }
 
 /* A drifting field of tiny shards for atmosphere. */
-function Shards() {
+function Shards({ count = 26 }) {
   const ref = useRef();
-  const count = 26;
   const data = useMemo(
     () =>
       Array.from({ length: count }, () => ({
@@ -86,7 +86,7 @@ function Shards() {
         ],
         s: THREE.MathUtils.randFloat(0.02, 0.07),
       })),
-    []
+    [count]
   );
   useFrame((state, delta) => {
     if (ref.current) ref.current.rotation.y += delta * 0.02;
@@ -103,7 +103,7 @@ function Shards() {
   );
 }
 
-function Scene() {
+function Scene({ shardCount }) {
   const pointer = useRef({ x: 0, y: 0 });
   useFrame((state) => {
     // normalised pointer (-1..1) smoothed
@@ -121,22 +121,28 @@ function Scene() {
         <Core pointer={pointer} />
       </Float>
       <Rings pointer={pointer} />
-      <Shards />
+      <Shards count={shardCount} />
     </>
   );
 }
 
 export default function HeroScene() {
+  const wrap = useRef(null);
+  const active = useCanvasActive(wrap);
+  const shardCount = isCompactViewport() ? 14 : 26;
+
   return (
-    <Canvas
-      className="!absolute inset-0"
-      dpr={[1, 1.8]}
-      gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-      camera={{ position: [0, 0, 6], fov: 42 }}
-    >
-      <Suspense fallback={null}>
-        <Scene />
-      </Suspense>
-    </Canvas>
+    <div ref={wrap} className="absolute inset-0">
+      <Canvas
+        frameloop={active ? "always" : "never"}
+        dpr={[1, Math.min(typeof window !== "undefined" ? window.devicePixelRatio : 2, 2)]}
+        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        camera={{ position: [0, 0, 6], fov: 42 }}
+      >
+        <Suspense fallback={null}>
+          <Scene shardCount={shardCount} />
+        </Suspense>
+      </Canvas>
+    </div>
   );
 }

@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { articleBySlug, relatedArticles } from "../data/journal.js";
 import { Reveal } from "../components/Reveal.jsx";
 import { Media } from "../components/Media.jsx";
+import { Seo } from "../components/Seo.jsx";
 import { NotFound } from "./NotFound.jsx";
 
 const EASE = [0.16, 1, 0.3, 1];
@@ -16,6 +17,7 @@ export function ArticlePage() {
 
   return (
     <article className="bg-ink">
+      <Seo title={article.title} description={article.excerpt} image={article.cover} type="article" />
       {/* Hero */}
       <header className="shell pb-12 pt-32 md:pt-40">
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: EASE }}>

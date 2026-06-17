@@ -47,7 +47,7 @@ export function Navbar() {
           <div className="shell flex h-[var(--nav-h,72px)] items-center justify-between">
             <Logo />
 
-            <nav className="hidden items-center gap-9 md:flex">
+            <nav className="hidden items-center gap-7 lg:flex">
               {nav.map((item) => (
                 <Link
                   key={item.to}
