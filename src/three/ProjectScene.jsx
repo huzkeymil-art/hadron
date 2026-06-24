@@ -1,7 +1,21 @@
 import { Suspense, useMemo, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { MeshDistortMaterial, Float } from "@react-three/drei";
+import { MeshDistortMaterial, Float, Environment, Lightformer, Sparkles } from "@react-three/drei";
+import * as THREE from "three";
 import { useCanvasActive, isCompactViewport } from "../hooks/useCanvasActive.js";
+
+/* Inline lighting environment tinted to the project accent — gives the metals
+   real reflections without fetching any HDR. */
+function StudioEnv({ color }) {
+  return (
+    <Environment resolution={128}>
+      <Lightformer intensity={2.4} color={color} position={[-5, 2, 2]} scale={[9, 9, 1]} />
+      <Lightformer intensity={1.2} color="#3a6bff" position={[6, -2, 1]} scale={[7, 7, 1]} />
+      <Lightformer intensity={3} color="#fff3ea" position={[0, 6, -4]} scale={[12, 4, 1]} />
+      <Lightformer intensity={0.7} color="#f4f1ea" position={[0, -6, 3]} scale={[10, 4, 1]} />
+    </Environment>
+  );
+}
 
 /* Smoothly tracked, normalised pointer shared by every variant. */
 function useParallax(ref, factor = 0.3) {
@@ -23,7 +37,7 @@ function Knot({ color }) {
   return (
     <mesh ref={ref} scale={1.25}>
       <torusKnotGeometry args={[1, 0.34, 220, 32]} />
-      <meshStandardMaterial color="#141414" roughness={0.15} metalness={0.85} emissive={color} emissiveIntensity={0.12} />
+      <meshStandardMaterial color="#0e0e0e" roughness={0.12} metalness={0.96} envMapIntensity={1.1} emissive={color} emissiveIntensity={0.1} />
     </mesh>
   );
 }
@@ -34,7 +48,7 @@ function Crystal({ color }) {
   return (
     <mesh ref={ref} scale={1.7}>
       <icosahedronGeometry args={[1, 0]} />
-      <meshStandardMaterial color={color} roughness={0.08} metalness={0.5} flatShading emissive={color} emissiveIntensity={0.18} />
+      <meshStandardMaterial color={color} roughness={0.05} metalness={0.7} envMapIntensity={1.3} flatShading emissive={color} emissiveIntensity={0.16} />
     </mesh>
   );
 }
@@ -45,7 +59,7 @@ function Prism({ color }) {
   return (
     <mesh ref={ref} scale={1.7}>
       <octahedronGeometry args={[1, 0]} />
-      <MeshDistortMaterial color="#161616" roughness={0.2} metalness={0.7} distort={0.28} speed={2} emissive={color} emissiveIntensity={0.15} flatShading />
+      <MeshDistortMaterial color="#121212" roughness={0.14} metalness={0.9} envMapIntensity={1.1} distort={0.28} speed={2} emissive={color} emissiveIntensity={0.12} flatShading />
     </mesh>
   );
 }
@@ -55,8 +69,8 @@ function Blob({ color }) {
   useParallax(ref, 0.35);
   return (
     <mesh ref={ref} scale={1.6}>
-      <icosahedronGeometry args={[1, 12]} />
-      <MeshDistortMaterial color="#141414" roughness={0.16} metalness={0.6} distort={0.36} speed={1.6} emissive={color} emissiveIntensity={0.1} />
+      <icosahedronGeometry args={[1, 14]} />
+      <MeshDistortMaterial color="#0e0e0e" roughness={0.12} metalness={0.94} envMapIntensity={1.1} distort={0.36} speed={1.6} emissive={color} emissiveIntensity={0.08} />
     </mesh>
   );
 }
@@ -76,7 +90,7 @@ function Rings({ color }) {
     <group ref={group}>
       <mesh scale={0.65}>
         <icosahedronGeometry args={[1, 4]} />
-        <meshStandardMaterial color="#141414" roughness={0.2} metalness={0.8} emissive={color} emissiveIntensity={0.25} />
+        <meshStandardMaterial color="#0e0e0e" roughness={0.14} metalness={0.95} envMapIntensity={1.1} emissive={color} emissiveIntensity={0.2} />
       </mesh>
       {rings.map((p, i) => (
         <mesh key={i} rotation={p.rot}>
@@ -127,10 +141,12 @@ function Scene({ variant, color }) {
   const usesPoints = variant === "particles";
   return (
     <>
-      <ambientLight intensity={0.4} />
-      <directionalLight position={[5, 6, 4]} intensity={2.2} color="#fff5ee" />
-      <pointLight position={[-6, -2, 2]} intensity={38} color={color} distance={22} />
-      <pointLight position={[4, -4, -4]} intensity={12} color="#3a6bff" distance={18} />
+      <fog attach="fog" args={["#0a0a0a", 9, 17]} />
+      <ambientLight intensity={0.2} />
+      <directionalLight position={[5, 6, 4]} intensity={1.5} color="#fff5ee" />
+      <pointLight position={[-6, -2, 2]} intensity={32} color={color} distance={22} />
+      <pointLight position={[4, -4, -4]} intensity={11} color="#3a6bff" distance={18} />
+      {!usesPoints && <StudioEnv color={color} />}
       {usesPoints ? (
         <Obj color={color} />
       ) : (
@@ -138,6 +154,7 @@ function Scene({ variant, color }) {
           <Obj color={color} />
         </Float>
       )}
+      <Sparkles count={40} scale={[10, 7, 5]} size={1.3} speed={0.3} opacity={0.45} color={color} />
     </>
   );
 }
@@ -151,7 +168,13 @@ export default function ProjectScene({ variant = "sphere", color = "#ff3d00" }) 
       <Canvas
         frameloop={active ? "always" : "never"}
         dpr={[1, Math.min(typeof window !== "undefined" ? window.devicePixelRatio : 2, 2)]}
-        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        gl={{
+          antialias: true,
+          alpha: true,
+          powerPreference: "high-performance",
+          toneMapping: THREE.ACESFilmicToneMapping,
+          toneMappingExposure: 1.05,
+        }}
         camera={{ position: [0, 0, 6], fov: 40 }}
       >
         <Suspense fallback={null}>

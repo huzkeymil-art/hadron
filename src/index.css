@@ -25,6 +25,7 @@
   body {
     @apply bg-ink text-bone font-sans antialiased;
     font-feature-settings: "ss01", "cv01", "kern";
+    font-optical-sizing: auto;
     overflow-x: hidden;
   }
 
@@ -85,11 +86,16 @@
 
   /* Monospace eyebrow label */
   .eyebrow {
-    @apply font-mono text-[0.7rem] uppercase tracking-[0.28em] text-bone/55;
+    @apply font-mono text-[0.7rem] uppercase tracking-[0.28em] text-bone/60;
   }
 
   .hairline {
     @apply h-px w-full bg-bone/10;
+  }
+
+  /* Tabular figures keep animated counters from jittering as digits change. */
+  .nums {
+    font-variant-numeric: tabular-nums;
   }
 
   /* The big Swiss display headline */

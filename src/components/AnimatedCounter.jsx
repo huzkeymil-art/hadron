@@ -28,7 +28,7 @@ export function AnimatedCounter({ value, suffix = "", duration = 1.8, className 
   }, [inView, reduce, value, duration, decimals, mv]);
 
   return (
-    <span ref={ref} className={className}>
+    <span ref={ref} className={`nums ${className ?? ""}`}>
       <span>0</span>
       {suffix}
     </span>

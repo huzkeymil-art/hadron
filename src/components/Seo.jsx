@@ -30,7 +30,7 @@ function setMeta(attr, key, content) {
  * Note: for crawlers that don't execute JS, add SSR/prerendering — these tags
  * are set client-side. Browsers and JS-executing crawlers pick them up fine.
  */
-export function Seo({ title, description, image, type = "website" }) {
+export function Seo({ title, description, image, type = "website", jsonLd }) {
   useEffect(() => {
     const fullTitle = title ? `${title} — ${SITE}` : DEFAULT_TITLE;
     const img = image || "/og.png";
@@ -53,10 +53,21 @@ export function Seo({ title, description, image, type = "website" }) {
     });
     canonical.setAttribute("href", window.location.origin + window.location.pathname);
 
+    // Per-page structured data
+    let ld;
+    if (jsonLd) {
+      ld = document.createElement("script");
+      ld.type = "application/ld+json";
+      ld.setAttribute("data-seo-jsonld", "");
+      ld.textContent = JSON.stringify(jsonLd);
+      document.head.appendChild(ld);
+    }
+
     return () => {
       document.title = DEFAULT_TITLE;
+      if (ld) ld.remove();
     };
-  }, [title, description, image, type]);
+  }, [title, description, image, type, jsonLd]);
 
   return null;
 }

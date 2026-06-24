@@ -88,6 +88,25 @@ export function Hero() {
         </div>
       </div>
 
+      {/* Scroll cue */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 1 }}
+        className="absolute bottom-24 right-[var(--gutter)] z-10 hidden flex-col items-center gap-4 md:flex"
+      >
+        <span className="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-bone/45 [writing-mode:vertical-rl]">
+          Scroll
+        </span>
+        <span className="relative h-16 w-px overflow-hidden bg-bone/15">
+          <motion.span
+            className="absolute inset-x-0 top-0 h-1/2 bg-ember"
+            animate={{ y: ["-100%", "220%"] }}
+            transition={{ duration: 1.9, repeat: Infinity, ease: [0.16, 1, 0.3, 1] }}
+          />
+        </span>
+      </motion.div>
+
       {/* Bottom ticker */}
       <div className="absolute inset-x-0 bottom-0 border-t border-bone/10 bg-ink/40 py-3 backdrop-blur-sm">
         <Marquee speed={34}>

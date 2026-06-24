@@ -1,8 +1,21 @@
 import { Suspense, useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { MeshDistortMaterial, Float } from "@react-three/drei";
+import { MeshDistortMaterial, Float, Environment, Lightformer, Sparkles } from "@react-three/drei";
 import * as THREE from "three";
 import { useCanvasActive, isCompactViewport } from "../hooks/useCanvasActive.js";
+
+/* Inline studio lighting environment — gives metals something to reflect
+   without fetching any HDR (fully offline). The single biggest quality lever. */
+function StudioEnv() {
+  return (
+    <Environment resolution={128}>
+      <Lightformer intensity={2.2} color="#ff6a2b" position={[-5, 2, 2]} scale={[9, 9, 1]} />
+      <Lightformer intensity={1.3} color="#3a6bff" position={[6, -2, 1]} scale={[7, 7, 1]} />
+      <Lightformer intensity={3} color="#fff3ea" position={[0, 6, -4]} scale={[12, 4, 1]} />
+      <Lightformer intensity={0.8} color="#f4f1ea" position={[0, -6, 3]} scale={[10, 4, 1]} />
+    </Environment>
+  );
+}
 
 /* The distorted core — a dark, glossy "hadron" that breathes and warps. */
 function Core({ pointer }) {
@@ -22,16 +35,17 @@ function Core({ pointer }) {
 
   return (
     <mesh ref={mesh} scale={1.55}>
-      <icosahedronGeometry args={[1, 12]} />
+      <icosahedronGeometry args={[1, 14]} />
       <MeshDistortMaterial
         ref={mat}
-        color="#141414"
-        roughness={0.18}
-        metalness={0.65}
-        distort={0.34}
-        speed={1.7}
+        color="#0e0e0e"
+        roughness={0.1}
+        metalness={0.96}
+        distort={0.32}
+        speed={1.6}
         emissive="#ff3d00"
-        emissiveIntensity={0.08}
+        emissiveIntensity={0.06}
+        envMapIntensity={1.1}
       />
     </mesh>
   );
@@ -113,15 +127,18 @@ function Scene({ shardCount }) {
 
   return (
     <>
-      <ambientLight intensity={0.35} />
-      <directionalLight position={[5, 6, 4]} intensity={2.4} color="#fff5ee" />
-      <pointLight position={[-6, -2, 2]} intensity={40} color="#ff3d00" distance={20} />
-      <pointLight position={[4, -4, -4]} intensity={14} color="#3a6bff" distance={18} />
+      <fog attach="fog" args={["#0a0a0a", 9, 17]} />
+      <ambientLight intensity={0.18} />
+      <directionalLight position={[5, 6, 4]} intensity={1.6} color="#fff5ee" />
+      <pointLight position={[-6, -2, 2]} intensity={34} color="#ff3d00" distance={20} />
+      <pointLight position={[4, -4, -4]} intensity={12} color="#3a6bff" distance={18} />
+      <StudioEnv />
       <Float speed={1.4} rotationIntensity={0.4} floatIntensity={0.7}>
         <Core pointer={pointer} />
       </Float>
       <Rings pointer={pointer} />
       <Shards count={shardCount} />
+      <Sparkles count={shardCount * 2} scale={[11, 7, 5]} size={1.4} speed={0.3} opacity={0.5} color="#ffb38a" />
     </>
   );
 }
@@ -136,7 +153,13 @@ export default function HeroScene() {
       <Canvas
         frameloop={active ? "always" : "never"}
         dpr={[1, Math.min(typeof window !== "undefined" ? window.devicePixelRatio : 2, 2)]}
-        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        gl={{
+          antialias: true,
+          alpha: true,
+          powerPreference: "high-performance",
+          toneMapping: THREE.ACESFilmicToneMapping,
+          toneMappingExposure: 1.05,
+        }}
         camera={{ position: [0, 0, 6], fov: 42 }}
       >
         <Suspense fallback={null}>

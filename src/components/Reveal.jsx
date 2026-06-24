@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
+import { EASE as EASES } from "../lib/motion.js";
 
-const EASE = [0.16, 1, 0.3, 1];
+const EASE = EASES.out;
 
 /**
  * Reveals text word-by-word with a masked upward slide as it enters view.

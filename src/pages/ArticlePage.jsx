@@ -15,9 +15,20 @@ export function ArticlePage() {
 
   const related = relatedArticles(slug, 2);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    description: article.excerpt,
+    image: article.cover,
+    author: { "@type": "Person", name: article.author.name, jobTitle: article.author.role },
+    publisher: { "@type": "Organization", name: "Hadron Studio" },
+    articleSection: article.tag,
+  };
+
   return (
     <article className="bg-ink">
-      <Seo title={article.title} description={article.excerpt} image={article.cover} type="article" />
+      <Seo title={article.title} description={article.excerpt} image={article.cover} type="article" jsonLd={jsonLd} />
       {/* Hero */}
       <header className="shell pb-12 pt-32 md:pt-40">
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: EASE }}>
