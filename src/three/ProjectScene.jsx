@@ -141,7 +141,7 @@ function Scene({ variant, color }) {
   const usesPoints = variant === "particles";
   return (
     <>
-      <fog attach="fog" args={["#0a0a0a", 9, 17]} />
+      <fog attach="fog" args={["#070707", 9, 17]} />
       <ambientLight intensity={0.2} />
       <directionalLight position={[5, 6, 4]} intensity={1.5} color="#fff5ee" />
       <pointLight position={[-6, -2, 2]} intensity={32} color={color} distance={22} />

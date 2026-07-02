@@ -5,11 +5,26 @@ import { Marquee } from "../components/Marquee.jsx";
 import { ErrorBoundary } from "../components/ErrorBoundary.jsx";
 import { HeroFallback } from "../three/HeroFallback.jsx";
 import { isWebGLAvailable } from "../lib/utils.js";
+import { EASE } from "../lib/motion.js";
 
 // Isolate the heavy Three.js bundle so it loads after first paint.
-const HeroScene = lazy(() => import("../three/HeroScene.jsx"));
+const ColliderScene = lazy(() => import("../three/ColliderScene.jsx"));
 
-const EASE = [0.16, 1, 0.3, 1];
+/* Masked line reveal for the big headline. */
+function Line({ children, delay }) {
+  return (
+    <span className="block overflow-hidden">
+      <motion.span
+        initial={{ y: "112%" }}
+        animate={{ y: 0 }}
+        transition={{ delay, duration: 1, ease: EASE.out }}
+        className="inline-block will-change-transform"
+      >
+        {children}
+      </motion.span>
+    </span>
+  );
+}
 
 export function Hero() {
   const reduceMotion = useReducedMotion();
@@ -18,12 +33,12 @@ export function Hero() {
 
   return (
     <section id="top" className="relative min-h-[100svh] w-full overflow-hidden">
-      {/* 3D background (with graceful fallback) */}
+      {/* 3D collider background (with graceful fallback) */}
       <div className="absolute inset-0">
         {use3D ? (
           <ErrorBoundary fallback={<HeroFallback />}>
             <Suspense fallback={<HeroFallback />}>
-              <HeroScene />
+              <ColliderScene />
             </Suspense>
           </ErrorBoundary>
         ) : (
@@ -32,41 +47,42 @@ export function Hero() {
       </div>
 
       {/* Legibility vignette */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/10 to-ink" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/60 via-transparent to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink/75 via-ink/5 to-ink" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/55 via-transparent to-transparent" />
 
       {/* Content */}
-      <div className="shell relative flex min-h-[100svh] flex-col justify-end pb-28 pt-32">
-        <motion.span
-          initial={{ opacity: 0, y: 16 }}
+      <div className="shell relative flex min-h-[100svh] flex-col justify-end pb-32 pt-32">
+        {/* Data readout — the lab instrument strip */}
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.8, ease: EASE }}
-          className="eyebrow mb-6 flex items-center gap-3"
+          transition={{ delay: 0.25, duration: 0.8, ease: EASE.out }}
+          className="mb-8 flex flex-wrap items-center gap-x-8 gap-y-2 border-b border-bone/10 pb-4 font-mono text-[0.65rem] uppercase tracking-[0.22em] text-bone/55"
         >
-          <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-ember" />
-          {hero.eyebrow} — Est. 2018
-        </motion.span>
+          <span className="flex items-center gap-2.5">
+            <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-ember" />
+            Accepting Q3 projects
+          </span>
+          <span className="hidden sm:inline">40.6782° N / 73.9442° W</span>
+          <span className="hidden md:inline">Est. 2018</span>
+          <span className="ml-auto hidden lg:inline">Run 05 — Live</span>
+        </motion.div>
 
-        <h1 className="display text-display max-w-[15ch]">
-          {hero.headline.map((line, i) => (
-            <span key={i} className="block overflow-hidden">
-              <motion.span
-                initial={{ y: "110%" }}
-                animate={{ y: 0 }}
-                transition={{ delay: 0.45 + i * 0.12, duration: 1, ease: EASE }}
-                className={`inline-block ${line.includes("move markets") ? "text-ember" : ""}`}
-              >
-                {line}
-              </motion.span>
-            </span>
-          ))}
+        <h1 className="display text-[clamp(3rem,10.5vw,10.5rem)] leading-[0.9]">
+          <Line delay={0.4}>We engineer</Line>
+          <Line delay={0.52}>
+            <span className="accent-serif pr-[0.06em] text-bone/95">websites</span> that move
+          </Line>
+          <Line delay={0.64}>
+            <span className="text-ember">markets.</span>
+          </Line>
         </h1>
 
         <div className="mt-10 flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.9, ease: EASE }}
+            transition={{ delay: 0.95, duration: 0.9, ease: EASE.out }}
             className="max-w-md text-pretty text-base leading-relaxed text-bone/70"
           >
             {hero.lead}
@@ -75,12 +91,12 @@ export function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.05, duration: 0.9, ease: EASE }}
+            transition={{ delay: 1.1, duration: 0.9, ease: EASE.out }}
             className="flex gap-10"
           >
             {hero.meta.map((m) => (
               <div key={m.k}>
-                <div className="text-2xl font-extrabold tracking-tight">{m.v}</div>
+                <div className="nums font-display text-2xl font-bold tracking-tight">{m.v}</div>
                 <div className="eyebrow mt-1">{m.k}</div>
               </div>
             ))}
@@ -102,7 +118,7 @@ export function Hero() {
           <motion.span
             className="absolute inset-x-0 top-0 h-1/2 bg-ember"
             animate={{ y: ["-100%", "220%"] }}
-            transition={{ duration: 1.9, repeat: Infinity, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1.9, repeat: Infinity, ease: EASE.out }}
           />
         </span>
       </motion.div>

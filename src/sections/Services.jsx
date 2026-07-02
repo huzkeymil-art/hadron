@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { services } from "../data/content.js";
 import { RevealText } from "../components/Reveal.jsx";
+import { Chapter } from "../components/Chapter.jsx";
 
 export function Services() {
   const [active, setActive] = useState(0);
@@ -9,6 +10,7 @@ export function Services() {
   return (
     <section id="services" className="relative bg-ink">
       <div className="shell py-24 md:py-36">
+        <Chapter index={2} label="What we do" meta="Capabilities" />
         <div className="mb-14 flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <h2 className="display text-display-sm max-w-[12ch]">
             <RevealText text="What we do" as="span" />

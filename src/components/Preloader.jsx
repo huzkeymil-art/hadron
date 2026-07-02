@@ -52,11 +52,11 @@ export function Preloader({ onDone }) {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="display text-[clamp(2rem,8vw,6rem)] text-bone"
+            className="accent-serif text-[clamp(2rem,8vw,6rem)] leading-none text-bone"
           >
             {words[wordIdx]}
           </motion.span>
-          <span className="display text-[clamp(3rem,14vw,11rem)] leading-none text-ember">
+          <span className="display nums text-[clamp(3rem,14vw,11rem)] leading-none text-ember">
             {String(count).padStart(2, "0")}
           </span>
         </div>

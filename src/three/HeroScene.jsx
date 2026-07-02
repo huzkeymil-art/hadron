@@ -127,7 +127,7 @@ function Scene({ shardCount }) {
 
   return (
     <>
-      <fog attach="fog" args={["#0a0a0a", 9, 17]} />
+      <fog attach="fog" args={["#070707", 9, 17]} />
       <ambientLight intensity={0.18} />
       <directionalLight position={[5, 6, 4]} intensity={1.6} color="#fff5ee" />
       <pointLight position={[-6, -2, 2]} intensity={34} color="#ff3d00" distance={20} />

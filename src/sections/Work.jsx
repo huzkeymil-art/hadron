@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import { projects } from "../data/projects.js";
 import { RevealText } from "../components/Reveal.jsx";
+import { Chapter } from "../components/Chapter.jsx";
+import { Scramble } from "../components/Scramble.jsx";
 import { useHasPointer } from "../hooks/useMediaQuery.js";
 
 export function Work() {
@@ -21,13 +23,14 @@ export function Work() {
   return (
     <section id="work" className="relative bg-ink" onMouseMove={hasPointer ? onMove : undefined}>
       <div className="shell py-24 md:py-36">
-        <div className="mb-12 flex items-end justify-between border-b border-bone/10 pb-6">
+        <Chapter index={3} label="Selected work" meta={`${String(projects.length).padStart(2, "0")} case studies`} />
+        <div className="mb-12 border-b border-bone/10 pb-6">
           <h2 className="display text-display-sm">
-            <RevealText text="Selected work" />
+            <RevealText text="Work that" />{" "}
+            <span className="accent-serif text-bone/95">
+              <RevealText text="performs." delay={0.08} />
+            </span>
           </h2>
-          <span className="hidden font-mono text-xs uppercase tracking-[0.2em] text-bone/50 md:block">
-            ({String(projects.length).padStart(2, "0")}) Case studies
-          </span>
         </div>
 
         <ul className="relative">
@@ -36,6 +39,7 @@ export function Work() {
               <Link
                 to={`/work/${p.slug}`}
                 data-cursor="View"
+                data-scramble-root
                 onMouseEnter={() => setActive(i)}
                 onMouseLeave={() => setActive(null)}
                 className="group grid grid-cols-[auto_1fr] items-center gap-4 border-b border-bone/10 py-6 md:grid-cols-[3rem_1fr_auto_8rem] md:gap-8 md:py-8"
@@ -51,9 +55,10 @@ export function Work() {
                   </span>
                 </span>
 
-                <span className="hidden font-mono text-[0.7rem] uppercase tracking-[0.18em] text-bone/45 md:block">
-                  {p.category}
-                </span>
+                <Scramble
+                  text={p.category}
+                  className="hidden font-mono text-[0.7rem] uppercase tracking-[0.18em] text-bone/45 md:block"
+                />
 
                 <span className="col-start-2 flex flex-wrap gap-x-3 gap-y-1 md:col-start-4 md:justify-end">
                   <span className="font-mono text-xs text-bone/45">{p.year}</span>

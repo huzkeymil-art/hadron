@@ -5,11 +5,11 @@ export default {
     extend: {
       colors: {
         ink: {
-          DEFAULT: "#0a0a0a",
-          900: "#0a0a0a",
-          800: "#111111",
-          700: "#161616",
-          600: "#1d1d1d",
+          DEFAULT: "#070707",
+          900: "#070707",
+          800: "#0e0e0e",
+          700: "#141414",
+          600: "#1b1b1b",
         },
         bone: {
           DEFAULT: "#f4f1ea",
@@ -21,16 +21,25 @@ export default {
           bright: "#ff4d12",
           deep: "#e2330a",
         },
+        plasma: "#ff8a3d",
+        ion: "#8b5cf6",
       },
       fontFamily: {
         sans: [
-          "Suisse",
           "Inter",
           "Helvetica Neue",
           "Arial",
           "system-ui",
           "sans-serif",
         ],
+        display: [
+          "Space Grotesk",
+          "Inter",
+          "Helvetica Neue",
+          "system-ui",
+          "sans-serif",
+        ],
+        serif: ["Instrument Serif", "Georgia", "serif"],
         mono: [
           "IBM Plex Mono",
           "JetBrains Mono",

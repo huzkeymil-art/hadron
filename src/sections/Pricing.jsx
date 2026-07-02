@@ -2,15 +2,20 @@ import { motion } from "framer-motion";
 import { pricing } from "../data/content.js";
 import { RevealText } from "../components/Reveal.jsx";
 import { Magnetic } from "../components/Magnetic.jsx";
+import { Chapter } from "../components/Chapter.jsx";
 import { cn } from "../lib/utils.js";
 
 export function Pricing() {
   return (
-    <section id="pricing" className="relative border-t border-bone/10 bg-ink">
+    <section id="pricing" className="relative bg-ink">
       <div className="shell py-24 md:py-36">
+        <Chapter index={7} label="Pricing" meta="Fixed scope, no surprises" />
         <div className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <h2 className="display text-display-sm">
-            <RevealText text="Pricing" />
+            <RevealText text="Honest" />{" "}
+            <span className="accent-serif text-bone/95">
+              <RevealText text="numbers." delay={0.08} />
+            </span>
           </h2>
           <p className="max-w-sm text-pretty text-bone/60">
             Transparent, fixed-scope engagements. No hourly surprises — you know the number before we start.

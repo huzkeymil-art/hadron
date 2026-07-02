@@ -2,17 +2,22 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { faqs } from "../data/content.js";
 import { RevealText } from "../components/Reveal.jsx";
+import { Chapter } from "../components/Chapter.jsx";
 
 export function FAQ() {
   const [open, setOpen] = useState(0);
 
   return (
-    <section className="relative border-t border-bone/10 bg-ink">
-      <div className="shell grid gap-12 py-24 md:grid-cols-[0.8fr_1.2fr] md:py-32">
+    <section className="relative bg-ink">
+      <div className="shell py-24 md:py-32">
+        <Chapter index={9} label="FAQ" meta="Before you ask" />
+        <div className="grid gap-12 md:grid-cols-[0.8fr_1.2fr]">
         <div>
-          <span className="eyebrow mb-6 block">✦ 003 — FAQ</span>
           <h2 className="display text-display-sm max-w-[10ch]">
-            <RevealText text="Questions, answered" />
+            <RevealText text="Questions," />{" "}
+            <span className="accent-serif text-bone/95">
+              <RevealText text="answered." delay={0.08} />
+            </span>
           </h2>
         </div>
 
@@ -48,6 +53,7 @@ export function FAQ() {
               </div>
             );
           })}
+        </div>
         </div>
       </div>
     </section>

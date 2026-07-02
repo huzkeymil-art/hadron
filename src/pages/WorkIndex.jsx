@@ -17,7 +17,7 @@ export function WorkIndex() {
         <h1 className="display text-display-sm md:text-display">
           <RevealText text="Work that" />
           <br />
-          <span className="text-ember">
+          <span className="accent-serif text-ember">
             <RevealText text="earns its keep." delay={0.08} />
           </span>
         </h1>

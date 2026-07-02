@@ -1,17 +1,22 @@
 import { Link } from "react-router-dom";
 import { journal } from "../data/journal.js";
 import { Reveal, RevealText } from "../components/Reveal.jsx";
+import { Chapter } from "../components/Chapter.jsx";
 
 export function Journal() {
   // Show the three most recent on the homepage.
   const posts = journal.slice(0, 3);
 
   return (
-    <section className="relative border-t border-bone/10 bg-ink-800">
+    <section className="relative bg-ink-800">
       <div className="shell py-24 md:py-32">
+        <Chapter index={10} label="Journal" meta="Notes from the studio" />
         <div className="mb-12 flex items-end justify-between border-b border-bone/10 pb-6">
           <h2 className="display text-display-sm">
-            <RevealText text="Journal" />
+            <RevealText text="Field" />{" "}
+            <span className="accent-serif text-bone/95">
+              <RevealText text="notes." delay={0.08} />
+            </span>
           </h2>
           <Link
             to="/journal"

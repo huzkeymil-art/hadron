@@ -174,7 +174,7 @@ export function ProjectPage() {
         <div className="pointer-events-none absolute inset-0 bg-ink/40" />
         <div className="shell relative">
           <Reveal>
-            <p className="max-w-[16ch] text-balance text-[clamp(2rem,6vw,5rem)] font-extrabold leading-[0.95] tracking-tight">
+            <p className="accent-serif max-w-[18ch] text-balance text-[clamp(2.2rem,6.5vw,5.5rem)] leading-[1.02]">
               {signatures[project.slug] ?? project.subtitle}
             </p>
           </Reveal>

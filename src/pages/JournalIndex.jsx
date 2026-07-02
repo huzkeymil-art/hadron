@@ -16,7 +16,10 @@ export function JournalIndex() {
       <header className="shell pb-12 pt-36 md:pt-44">
         <span className="eyebrow mb-6 block">Journal — notes from the studio</span>
         <h1 className="display text-display-sm md:text-display">
-          <RevealText text="Field notes." />
+          <RevealText text="Field" />{" "}
+          <span className="accent-serif text-bone/95">
+            <RevealText text="notes." delay={0.08} />
+          </span>
         </h1>
         <Reveal delay={0.15} className="mt-8 max-w-xl text-pretty text-lg leading-relaxed text-bone/60">
           Essays on craft, engineering and how we run the studio — written by the people doing the work.

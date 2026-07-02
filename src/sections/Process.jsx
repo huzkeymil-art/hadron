@@ -1,15 +1,19 @@
 import { process } from "../data/content.js";
 import { Reveal, RevealText } from "../components/Reveal.jsx";
+import { Chapter } from "../components/Chapter.jsx";
 
 export function Process() {
   return (
-    <section className="relative border-t border-bone/10 bg-ink-800">
+    <section className="relative bg-ink-800">
       <div className="shell py-24 md:py-32">
-        <div className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <h2 className="display text-display-sm max-w-[14ch]">
-            <RevealText text="How the work happens" />
+        <Chapter index={4} label="Process" meta="Four movements" />
+        <div className="mb-14">
+          <h2 className="display text-display-sm max-w-[16ch]">
+            <RevealText text="How the work" />{" "}
+            <span className="accent-serif text-bone/95">
+              <RevealText text="happens." delay={0.08} />
+            </span>
           </h2>
-          <span className="eyebrow">✦ 002 — Process</span>
         </div>
 
         <div className="grid gap-px overflow-hidden rounded-lg bg-bone/10 md:grid-cols-4">

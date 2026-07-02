@@ -47,7 +47,7 @@ export function StudioPage() {
           <h1 className="display text-display-sm md:text-display">
             <RevealText text="Small team," />
             <br />
-            <span className="text-ember">
+            <span className="accent-serif text-ember">
               <RevealText text="senior hands." delay={0.08} />
             </span>
           </h1>
@@ -133,7 +133,7 @@ export function StudioPage() {
       {/* CTA */}
       <section className="shell py-24 text-center md:py-32">
         <h2 className="display mx-auto max-w-[16ch] text-display-sm md:text-display">
-          Let's build the next one.
+          Let's build <span className="accent-serif text-ember">the next one.</span>
         </h2>
         <Magnetic className="mt-10 inline-block">
           <Link

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { studio } from "../data/content.js";
 import { RevealText } from "../components/Reveal.jsx";
 import { Magnetic } from "../components/Magnetic.jsx";
+import { Chapter } from "../components/Chapter.jsx";
 import { cn } from "../lib/utils.js";
 
 const BUDGETS = ["< $10k", "$10k–$25k", "$25k–$50k", "$50k+", "Not sure yet"];
@@ -47,18 +48,22 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="relative border-t border-bone/10 bg-ink">
-      <div className="shell grid gap-14 py-24 md:py-36 lg:grid-cols-[1.1fr_0.9fr]">
+    <section id="contact" className="relative bg-ink">
+      <div className="shell pt-24 md:pt-36">
+        <Chapter index={11} label="Contact" meta="Response within 24h" />
+      </div>
+      <div className="shell grid gap-14 pb-24 md:pb-36 lg:grid-cols-[1.1fr_0.9fr]">
         {/* Left — pitch */}
         <div className="flex flex-col justify-between">
           <div>
-            <span className="eyebrow mb-6 block">✦ 004 — Contact</span>
             <h2 className="display text-display-sm leading-[0.9] md:text-display">
               <span className="block overflow-hidden">
                 <RevealText text="Start a" />
               </span>
               <span className="block overflow-hidden text-ember">
-                <RevealText text="project." delay={0.08} />
+                <span className="accent-serif">
+                  <RevealText text="project." delay={0.08} />
+                </span>
               </span>
             </h2>
             <p className="mt-8 max-w-md text-pretty text-lg leading-relaxed text-bone/60">

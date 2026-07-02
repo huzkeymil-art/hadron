@@ -39,7 +39,7 @@ backend. Built to convert ambitious brands into clients.
 | Front-end    | React 18, Vite 5, React Router 6                                |
 | 3D / WebGL   | Three.js, @react-three/fiber, @react-three/drei                 |
 | Motion       | Framer Motion, Lenis (smooth scroll)                            |
-| Styling      | Tailwind CSS (custom Swiss design tokens)                       |
+| Styling      | Tailwind CSS · Space Grotesk + Instrument Serif type system     |
 | Back-end     | Node.js, Express, Helmet, Compression, CORS, Morgan            |
 | Tooling      | ESLint 9 (flat config)                                          |
 

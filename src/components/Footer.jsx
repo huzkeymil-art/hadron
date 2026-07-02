@@ -70,14 +70,21 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Oversized wordmark */}
-      <div className="relative select-none">
+      {/* Oversized wordmark — spectral gradient sweeps in on hover */}
+      <div className="group relative select-none" data-cursor>
         <div className="shell">
           <h2
             aria-hidden
-            className="display pointer-events-none w-full translate-y-[14%] text-center text-[clamp(4rem,23vw,20rem)] leading-none text-bone/[0.06]"
+            className="display relative w-full translate-y-[14%] text-center text-[clamp(4rem,23vw,20rem)] leading-none"
           >
-            HADRON
+            <span className="text-bone/[0.06] transition-opacity duration-700 group-hover:opacity-40">
+              HADRON
+            </span>
+            <span
+              className="text-spectrum absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100"
+            >
+              HADRON
+            </span>
           </h2>
         </div>
       </div>

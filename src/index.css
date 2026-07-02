@@ -3,11 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --ink: #0a0a0a;
+  --ink: #070707;
   --bone: #f4f1ea;
   --ember: #ff3d00;
   --line: rgba(244, 241, 234, 0.12);
   --gutter: clamp(1.25rem, 4vw, 4rem);
+  --spectrum: linear-gradient(92deg, #ff3d00 0%, #ff8a3d 55%, #8b5cf6 130%);
 }
 
 @layer base {
@@ -61,7 +62,7 @@
   }
 
   h1, h2, h3, h4 {
-    @apply font-sans font-extrabold tracking-tightest leading-[0.92];
+    @apply font-display font-bold tracking-tighter leading-[0.92];
     text-wrap: balance;
   }
 
@@ -100,7 +101,25 @@
 
   /* The big Swiss display headline */
   .display {
-    @apply font-extrabold uppercase tracking-tightest leading-[0.86];
+    @apply font-display font-bold uppercase tracking-tighter leading-[0.88];
+  }
+
+  /* Italic serif accent word inside a display headline — the editorial counterpoint. */
+  .accent-serif {
+    @apply font-serif font-normal italic normal-case tracking-normal;
+  }
+
+  /* Spectral gradient text for signature moments. Use sparingly. */
+  .text-spectrum {
+    background: var(--spectrum);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Chapter header row used at the top of every section. */
+  .chapter {
+    @apply mb-10 flex items-baseline justify-between gap-6 border-t border-bone/15 pt-4;
   }
 
   /* Outline / stroke text used for oversized background type */
