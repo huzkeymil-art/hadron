@@ -32,7 +32,7 @@ export function JournalIndex() {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: EASE }}
+          transition={{ duration: 0.95, ease: EASE }}
         >
           <Link to={`/journal/${featured.slug}`} data-cursor="Read" className="group grid gap-8 md:grid-cols-2 md:items-center">
             <div className="relative h-[42vh] overflow-hidden rounded-xl md:h-[60vh]">
@@ -47,12 +47,12 @@ export function JournalIndex() {
             </div>
             <div>
               <div className="mb-5 flex items-center gap-4">
-                <span className="rounded-full border border-bone/20 px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-bone/65">
+                <span className="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-bone/65">
                   {featured.tag}
                 </span>
                 <span className="font-mono text-xs text-bone/45">{featured.date} · {featured.readingTime}</span>
               </div>
-              <h2 className="text-balance text-3xl font-extrabold leading-tight tracking-tight transition-colors duration-300 group-hover:text-ember md:text-5xl">
+              <h2 className="text-balance text-3xl font-semibold leading-tight tracking-tight text-bone/90 transition-colors duration-300 group-hover:text-bone md:text-5xl">
                 {featured.title}
               </h2>
               <p className="mt-5 max-w-lg text-pretty leading-relaxed text-bone/60">{featured.excerpt}</p>
@@ -74,13 +74,13 @@ export function JournalIndex() {
               className="group flex h-full min-h-[20rem] flex-col justify-between border-b border-bone/10 py-8 md:border-b-0 md:pr-8"
             >
               <div className="flex items-center justify-between">
-                <span className="rounded-full border border-bone/15 px-3 py-1 font-mono text-[0.6rem] uppercase tracking-[0.16em] text-bone/55">
+                <span className="font-mono text-[0.6rem] uppercase tracking-[0.14em] text-bone/55">
                   {post.tag}
                 </span>
                 <span className="font-mono text-xs text-bone/40">{post.readingTime}</span>
               </div>
               <div>
-                <h3 className="text-pretty text-xl font-bold leading-snug transition-colors group-hover:text-ember">
+                <h3 className="text-pretty text-xl font-bold leading-snug text-bone/90 transition-colors duration-300 group-hover:text-bone">
                   {post.title}
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-bone/50">{post.excerpt}</p>

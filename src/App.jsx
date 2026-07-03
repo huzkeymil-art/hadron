@@ -7,8 +7,6 @@ import { EASE } from "./lib/motion.js";
 import { Preloader } from "./components/Preloader.jsx";
 import { Cursor } from "./components/Cursor.jsx";
 import { Grain } from "./components/Grain.jsx";
-import { GridLines } from "./components/GridLines.jsx";
-import { ScrollProgress } from "./components/ScrollProgress.jsx";
 import { ScrollManager } from "./components/ScrollManager.jsx";
 import { Navbar } from "./components/Navbar.jsx";
 import { Footer } from "./components/Footer.jsx";
@@ -31,11 +29,9 @@ export default function App() {
       <a href="#main-content" className="skip-link">
         Skip to content
       </a>
-      <Preloader onDone={() => setLoaded(true)} />
+      {!loaded && <Preloader onDone={() => setLoaded(true)} />}
       <Cursor />
       <Grain />
-      <GridLines />
-      <ScrollProgress />
       <ScrollManager />
       <Navbar />
 
@@ -43,10 +39,9 @@ export default function App() {
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={location.pathname}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.32, ease: EASE.out }}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.9, ease: EASE.out } }}
+            exit={{ opacity: 0, transition: { duration: 0.25, ease: EASE.out } }}
           >
             <Routes location={location}>
               <Route path="/" element={<Home />} />

@@ -47,14 +47,14 @@ export function StudioPage() {
           <h1 className="display text-display-sm md:text-display">
             <RevealText text="Small team," />
             <br />
-            <span className="accent-serif text-ember">
+            <span className="accent-serif text-bone/95">
               <RevealText text="senior hands." delay={0.08} />
             </span>
           </h1>
           <motion.p
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8, ease: EASE }}
+            transition={{ delay: 0.5, duration: 0.95, ease: EASE }}
             className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-bone/70"
           >
             {studioStory.lead}
@@ -64,7 +64,7 @@ export function StudioPage() {
 
       {/* Story */}
       <section className="shell grid gap-10 py-20 md:grid-cols-[0.5fr_1fr] md:py-28">
-        <span className="eyebrow">✦ Who we are</span>
+        <span className="eyebrow">Who we are</span>
         <Reveal>
           <p className="text-balance text-[clamp(1.4rem,3vw,2.2rem)] font-semibold leading-snug tracking-tight">
             {studioStory.body}
@@ -81,7 +81,7 @@ export function StudioPage() {
             </h2>
             <span className="eyebrow hidden md:block">Four principles</span>
           </div>
-          <div className="grid gap-px overflow-hidden rounded-xl bg-bone/10 md:grid-cols-2">
+          <div className="grid gap-px overflow-hidden bg-bone/10 md:grid-cols-2">
             {values.map((v, i) => (
               <Reveal key={v.k} delay={i * 0.06} className="flex flex-col gap-3 bg-ink-800 p-8 md:p-10">
                 <span className="font-mono text-sm text-ember">0{i + 1}</span>
@@ -113,11 +113,11 @@ export function StudioPage() {
                     alt={m.name}
                     accent="#ff3d00"
                     className="h-full w-full"
-                    imgClassName="grayscale transition-all duration-700 ease-expo group-hover:grayscale-0 group-hover:scale-[1.04]"
+                    imgClassName="grayscale transition-all duration-500 ease-expo group-hover:grayscale-0 group-hover:scale-[1.04]"
                   />
                 </div>
                 <h3 className="text-lg font-bold tracking-tight">{m.name}</h3>
-                <p className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-ember">{m.role}</p>
+                <p className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-bone/50">{m.role}</p>
                 <p className="mt-3 text-pretty text-sm leading-relaxed text-bone/55">{m.bio}</p>
               </div>
             </Reveal>

@@ -9,8 +9,8 @@ export function FAQ() {
 
   return (
     <section className="relative bg-ink">
-      <div className="shell py-24 md:py-32">
-        <Chapter index={9} label="FAQ" meta="Before you ask" />
+      <div className="shell py-32 md:py-40">
+        <Chapter index={9} label="FAQ" />
         <div className="grid gap-12 md:grid-cols-[0.8fr_1.2fr]">
         <div>
           <h2 className="display text-display-sm max-w-[10ch]">
@@ -33,7 +33,11 @@ export function FAQ() {
                   aria-expanded={isOpen}
                 >
                   <span className="text-lg font-semibold md:text-xl">{item.q}</span>
-                  <motion.span animate={{ rotate: isOpen ? 45 : 0 }} className="shrink-0 text-2xl text-ember">
+                  <motion.span
+                    animate={{ rotate: isOpen ? 45 : 0 }}
+                    transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                    className="shrink-0 text-2xl font-light text-bone/50"
+                  >
                     +
                   </motion.span>
                 </button>
@@ -43,7 +47,7 @@ export function FAQ() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                       className="overflow-hidden"
                     >
                       <p className="max-w-xl pb-7 text-pretty leading-relaxed text-bone/60">{item.a}</p>

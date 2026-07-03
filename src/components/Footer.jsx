@@ -13,7 +13,7 @@ export function Footer() {
           <div className="max-w-sm">
             <div className="flex items-center gap-3">
               <LogoMark className="h-8 w-8 text-ember" />
-              <span className="text-xl font-extrabold uppercase tracking-tight">Hadron®</span>
+              <span className="text-xl font-semibold uppercase tracking-tight">Hadron®</span>
             </div>
             <p className="mt-5 text-pretty leading-relaxed text-bone/55">
               A design & engineering studio building high-impact websites for ambitious brands. Strategy, design and code under one roof.
@@ -70,19 +70,14 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Oversized wordmark — spectral gradient sweeps in on hover */}
+      {/* Oversized wordmark — held almost silent; it simply breathes brighter on hover */}
       <div className="group relative select-none" data-cursor>
         <div className="shell">
           <h2
             aria-hidden
-            className="display relative w-full translate-y-[14%] text-center text-[clamp(4rem,23vw,20rem)] leading-none"
+            className="display w-full translate-y-[14%] text-center text-[clamp(4rem,23vw,20rem)] leading-none"
           >
-            <span className="text-bone/[0.06] transition-opacity duration-700 group-hover:opacity-40">
-              HADRON
-            </span>
-            <span
-              className="text-spectrum absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100"
-            >
+            <span className="text-bone/[0.06] transition-colors duration-500 ease-expo group-hover:text-bone/[0.16]">
               HADRON
             </span>
           </h2>

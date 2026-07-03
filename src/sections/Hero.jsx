@@ -1,23 +1,22 @@
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { hero } from "../data/content.js";
-import { Marquee } from "../components/Marquee.jsx";
 import { ErrorBoundary } from "../components/ErrorBoundary.jsx";
 import { HeroFallback } from "../three/HeroFallback.jsx";
 import { isWebGLAvailable } from "../lib/utils.js";
 import { EASE } from "../lib/motion.js";
 
 // Isolate the heavy Three.js bundle so it loads after first paint.
-const ColliderScene = lazy(() => import("../three/ColliderScene.jsx"));
+const BlackHoleScene = lazy(() => import("../three/BlackHoleScene.jsx"));
 
 /* Masked line reveal for the big headline. */
 function Line({ children, delay }) {
   return (
-    <span className="block overflow-hidden">
+    <span className="mask-line block">
       <motion.span
         initial={{ y: "112%" }}
         animate={{ y: 0 }}
-        transition={{ delay, duration: 1, ease: EASE.out }}
+        transition={{ delay, duration: 1.1, ease: EASE.out }}
         className="inline-block will-change-transform"
       >
         {children}
@@ -31,14 +30,38 @@ export function Hero() {
   // Decide once, on the client, whether to mount the 3D scene at all.
   const [use3D] = useState(() => !reduceMotion && isWebGLAvailable());
 
+  // House lights: the scene dims and drifts as content scrolls over it.
+  // Scroll-linked, so the user conducts it — nothing plays on its own.
+  const sceneRef = useRef(null);
+  useEffect(() => {
+    if (reduceMotion) return;
+    const el = sceneRef.current;
+    if (!el) return;
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const p = Math.min(1, Math.max(0, window.scrollY / (window.innerHeight * 0.85)));
+        el.style.opacity = String(1 - p * 0.92);
+        el.style.transform = `translate3d(0, ${Math.round(p * 90)}px, 0)`;
+      });
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, [reduceMotion]);
+
   return (
     <section id="top" className="relative min-h-[100svh] w-full overflow-hidden">
-      {/* 3D collider background (with graceful fallback) */}
-      <div className="absolute inset-0">
+      {/* The black hole — the page's single living thing (with graceful fallback) */}
+      <div ref={sceneRef} className="absolute inset-0 will-change-[opacity,transform]">
         {use3D ? (
           <ErrorBoundary fallback={<HeroFallback />}>
             <Suspense fallback={<HeroFallback />}>
-              <ColliderScene />
+              <BlackHoleScene />
             </Suspense>
           </ErrorBoundary>
         ) : (
@@ -46,95 +69,58 @@ export function Hero() {
         )}
       </div>
 
-      {/* Legibility vignette */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink/75 via-ink/5 to-ink" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/55 via-transparent to-transparent" />
+      {/* Cinematic framing: legibility scrims + a single radial vignette */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink/70 via-transparent to-ink" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/60 via-transparent to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_42%,transparent_55%,rgba(7,7,7,0.72)_100%)]" />
 
-      {/* Content */}
-      <div className="shell relative flex min-h-[100svh] flex-col justify-end pb-32 pt-32">
-        {/* Data readout — the lab instrument strip */}
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
+      {/* Content — one label, one headline, one paragraph. Nothing else. */}
+      <div className="shell relative flex min-h-[100svh] flex-col justify-end pb-24 pt-32">
+        <motion.span
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25, duration: 0.8, ease: EASE.out }}
-          className="mb-8 flex flex-wrap items-center gap-x-8 gap-y-2 border-b border-bone/10 pb-4 font-mono text-[0.65rem] uppercase tracking-[0.22em] text-bone/55"
+          transition={{ delay: 0.25, duration: 0.9, ease: EASE.out }}
+          className="eyebrow mb-8 block"
         >
-          <span className="flex items-center gap-2.5">
-            <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-ember" />
-            Accepting Q3 projects
-          </span>
-          <span className="hidden sm:inline">40.6782° N / 73.9442° W</span>
-          <span className="hidden md:inline">Est. 2018</span>
-          <span className="ml-auto hidden lg:inline">Run 05 — Live</span>
-        </motion.div>
+          {hero.eyebrow}
+          <span className="hidden sm:inline"> — Brooklyn, NY</span>
+        </motion.span>
 
-        <h1 className="display text-[clamp(3rem,10.5vw,10.5rem)] leading-[0.9]">
+        <h1 className="display text-[clamp(3.1rem,11vw,11.5rem)]">
           <Line delay={0.4}>We engineer</Line>
-          <Line delay={0.52}>
+          <Line delay={0.5}>
             <span className="accent-serif pr-[0.06em] text-bone/95">websites</span> that move
           </Line>
-          <Line delay={0.64}>
+          <Line delay={0.6}>
             <span className="text-ember">markets.</span>
           </Line>
         </h1>
 
-        <div className="mt-10 flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+        {/* Lead sits right — the same editorial counter-position as the Manifesto */}
+        <div className="mt-12 flex justify-end">
           <motion.p
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.95, duration: 0.9, ease: EASE.out }}
-            className="max-w-md text-pretty text-base leading-relaxed text-bone/70"
+            transition={{ delay: 1.05, duration: 1, ease: EASE.out }}
+            className="max-w-md text-pretty text-base leading-relaxed text-bone/70 md:mr-[8%]"
           >
             {hero.lead}
           </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1, duration: 0.9, ease: EASE.out }}
-            className="flex gap-10"
-          >
-            {hero.meta.map((m) => (
-              <div key={m.k}>
-                <div className="nums font-display text-2xl font-bold tracking-tight">{m.v}</div>
-                <div className="eyebrow mt-1">{m.k}</div>
-              </div>
-            ))}
-          </motion.div>
         </div>
       </div>
 
-      {/* Scroll cue */}
+      {/* Scroll cue — a label and a hairline, at rest */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-24 right-[var(--gutter)] z-10 hidden flex-col items-center gap-4 md:flex"
+        transition={{ delay: 1.6, duration: 1.2, ease: EASE.out }}
+        className="absolute bottom-28 right-[var(--gutter)] z-10 hidden flex-col items-center gap-4 md:flex"
       >
-        <span className="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-bone/45 [writing-mode:vertical-rl]">
+        <span className="font-mono text-[0.6rem] uppercase tracking-[0.2em] text-bone/45 [writing-mode:vertical-rl]">
           Scroll
         </span>
-        <span className="relative h-16 w-px overflow-hidden bg-bone/15">
-          <motion.span
-            className="absolute inset-x-0 top-0 h-1/2 bg-ember"
-            animate={{ y: ["-100%", "220%"] }}
-            transition={{ duration: 1.9, repeat: Infinity, ease: EASE.out }}
-          />
-        </span>
+        <span className="h-16 w-px bg-gradient-to-b from-bone/40 to-bone/5" />
       </motion.div>
-
-      {/* Bottom ticker */}
-      <div className="absolute inset-x-0 bottom-0 border-t border-bone/10 bg-ink/40 py-3 backdrop-blur-sm">
-        <Marquee speed={34}>
-          {["Strategy", "Art Direction", "Web Design", "React Engineering", "Three.js / WebGL", "Motion", "E-commerce", "SEO & Performance"].map(
-            (w) => (
-              <span key={w} className="mx-8 flex items-center gap-8 font-mono text-xs uppercase tracking-[0.2em] text-bone/55">
-                {w} <span className="text-ember">✦</span>
-              </span>
-            )
-          )}
-        </Marquee>
-      </div>
     </section>
   );
 }

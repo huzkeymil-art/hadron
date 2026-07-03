@@ -4,40 +4,39 @@ import { motion } from "framer-motion";
 const EASE = [0.83, 0, 0.17, 1];
 
 /**
- * Full-screen intro: a percentage counter races to 100 while a word cycles,
- * then the panel splits and lifts to reveal the site. Calls `onDone` when gone.
+ * Full-screen intro, kept quiet: the wordmark holds the frame while a hairline
+ * fills to 100, then the panel lifts to reveal the site. One element, one move.
+ * Calls `onDone` when gone.
  */
 export function Preloader({ onDone }) {
   const [count, setCount] = useState(0);
   const [done, setDone] = useState(false);
-  const words = ["Strategy", "Design", "Engineering", "Hadron"];
-  const [wordIdx, setWordIdx] = useState(0);
 
   useEffect(() => {
     let n = 0;
+    let timer;
     const tick = () => {
       // ease the counter so it slows as it approaches 100
-      const step = Math.max(1, Math.round((100 - n) / 12));
+      const step = Math.max(2, Math.round((100 - n) / 5));
       n = Math.min(100, n + step);
       setCount(n);
-      setWordIdx((i) => (i + 1) % words.length);
       if (n < 100) {
-        timer = setTimeout(tick, 130);
+        timer = setTimeout(tick, 80);
       } else {
-        setTimeout(() => setDone(true), 420);
+        timer = setTimeout(() => setDone(true), 420);
       }
     };
-    let timer = setTimeout(tick, 260);
+    timer = setTimeout(tick, 260);
     return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <motion.div
+      aria-hidden
       className="fixed inset-0 z-[120] flex flex-col bg-ink"
       initial={{ opacity: 1 }}
       animate={done ? { y: "-100%" } : {}}
-      transition={{ duration: 1.0, ease: EASE }}
+      transition={{ duration: 1.1, ease: EASE }}
       onAnimationComplete={() => done && onDone?.()}
     >
       <div className="shell flex flex-1 flex-col justify-between py-8">
@@ -46,27 +45,28 @@ export function Preloader({ onDone }) {
           <span className="eyebrow">© 2026</span>
         </div>
 
-        <div className="flex items-end justify-between gap-4">
+        <div className="flex flex-1 flex-col items-center justify-center">
           <motion.span
-            key={wordIdx}
-            initial={{ opacity: 0, y: 18 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="accent-serif text-[clamp(2rem,8vw,6rem)] leading-none text-bone"
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="display text-[clamp(1.8rem,4vw,2.8rem)] text-bone"
           >
-            {words[wordIdx]}
+            Hadron<span className="align-super text-[0.4em]">®</span>
           </motion.span>
-          <span className="display nums text-[clamp(3rem,14vw,11rem)] leading-none text-ember">
-            {String(count).padStart(2, "0")}
-          </span>
+          <div className="relative mt-8 h-px w-40 overflow-hidden bg-bone/15">
+            <motion.div
+              className="absolute inset-y-0 left-0 bg-bone/70"
+              animate={{ width: `${count}%` }}
+              transition={{ ease: "linear", duration: 0.15 }}
+            />
+          </div>
         </div>
 
-        <div className="relative h-px w-full overflow-hidden bg-bone/15">
-          <motion.div
-            className="absolute inset-y-0 left-0 bg-ember"
-            animate={{ width: `${count}%` }}
-            transition={{ ease: "linear", duration: 0.12 }}
-          />
+        <div className="flex items-center justify-end">
+          <span className="nums font-mono text-[0.7rem] tracking-[0.14em] text-bone/45">
+            {String(count).padStart(3, "0")}
+          </span>
         </div>
       </div>
     </motion.div>

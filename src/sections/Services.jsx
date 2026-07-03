@@ -9,9 +9,9 @@ export function Services() {
 
   return (
     <section id="services" className="relative bg-ink">
-      <div className="shell py-24 md:py-36">
-        <Chapter index={2} label="What we do" meta="Capabilities" />
-        <div className="mb-14 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+      <div className="shell py-32 md:py-44">
+        <Chapter index={2} label="What we do" />
+        <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <h2 className="display text-display-sm max-w-[12ch]">
             <RevealText text="What we do" as="span" />
           </h2>
@@ -44,7 +44,8 @@ export function Services() {
                   </span>
                   <motion.span
                     animate={{ rotate: open ? 45 : 0 }}
-                    className="ml-auto text-2xl text-bone/50"
+                    transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                    className="ml-auto text-2xl font-light text-bone/50"
                   >
                     +
                   </motion.span>
@@ -66,7 +67,7 @@ export function Services() {
                         <ul className="flex flex-wrap content-start gap-x-8 gap-y-3">
                           {s.points.map((p) => (
                             <li key={p} className="flex items-center gap-2 text-bone/60">
-                              <span className="text-ember">→</span>
+                              <span className="text-bone/35">—</span>
                               {p}
                             </li>
                           ))}

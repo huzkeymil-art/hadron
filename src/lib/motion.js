@@ -7,21 +7,22 @@ export const EASE = {
   out: [0.16, 1, 0.3, 1],
   // symmetric, for curtains / clip reveals
   inOut: [0.83, 0, 0.17, 1],
-  // gentle
-  soft: [0.4, 0, 0.2, 1],
 };
 
+// Bimodal duration law: micro-interactions live at ≤0.3s, macro reveals at
+// 0.9–1.4s. Nothing ships in the 0.4–0.8s middle band — that range is what
+// reads as "busy website" instead of cinema.
 export const DUR = {
-  fast: 0.4,
-  base: 0.7,
-  slow: 0.9,
-  xslow: 1.1,
+  micro: 0.25,
+  base: 0.9,
+  slow: 1.1,
+  xslow: 1.4,
 };
 
 // Common Framer Motion variants reused across the site.
 export const fadeUp = {
   hidden: { opacity: 0, y: 28 },
-  show: { opacity: 1, y: 0, transition: { duration: DUR.slow, ease: EASE.out } },
+  show: { opacity: 1, y: 0, transition: { duration: DUR.base, ease: EASE.out } },
 };
 
 export const maskUp = {

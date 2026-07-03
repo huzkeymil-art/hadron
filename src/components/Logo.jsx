@@ -36,8 +36,8 @@ export function Logo({ className }) {
       className={`group flex items-center gap-2.5 ${className ?? ""}`}
       aria-label="Hadron Studio — home"
     >
-      <LogoMark className="h-6 w-6 text-ember transition-transform duration-700 ease-expo group-hover:rotate-180" />
-      <span className="text-[1.05rem] font-extrabold uppercase tracking-tight leading-none">
+      <LogoMark className="h-6 w-6 text-ember transition-transform duration-500 ease-expo group-hover:rotate-180" />
+      <span className="text-[1.05rem] font-semibold uppercase tracking-tight leading-none">
         Hadron<span className="text-ember">®</span>
       </span>
     </Link>

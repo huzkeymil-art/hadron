@@ -14,7 +14,7 @@ export function Media({ src, alt, accent = "#1d1d1d", className, imgClassName, p
     <div className={cn("relative overflow-hidden bg-ink-700", className)}>
       <div
         aria-hidden
-        className="absolute inset-0 transition-opacity duration-700"
+        className="absolute inset-0 transition-opacity duration-[1200ms] ease-expo"
         style={{
           opacity: loaded ? 0 : 1,
           background: `radial-gradient(120% 120% at 30% 20%, ${accent}22, #111 70%)`,

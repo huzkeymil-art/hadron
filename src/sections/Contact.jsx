@@ -49,18 +49,18 @@ export function Contact() {
 
   return (
     <section id="contact" className="relative bg-ink">
-      <div className="shell pt-24 md:pt-36">
-        <Chapter index={11} label="Contact" meta="Response within 24h" />
+      <div className="shell pt-32 md:pt-44">
+        <Chapter index={11} label="Contact" />
       </div>
-      <div className="shell grid gap-14 pb-24 md:pb-36 lg:grid-cols-[1.1fr_0.9fr]">
+      <div className="shell grid gap-14 pb-32 md:pb-44 lg:grid-cols-[1.1fr_0.9fr]">
         {/* Left — pitch */}
         <div className="flex flex-col justify-between">
           <div>
-            <h2 className="display text-display-sm leading-[0.9] md:text-display">
-              <span className="block overflow-hidden">
+            <h2 className="display text-display-sm md:text-display">
+              <span className="mask-line block">
                 <RevealText text="Start a" />
               </span>
-              <span className="block overflow-hidden text-ember">
+              <span className="mask-line block text-ember">
                 <span className="accent-serif">
                   <RevealText text="project." delay={0.08} />
                 </span>
@@ -170,9 +170,9 @@ export function Contact() {
                         data-cursor
                         onClick={() => setForm((f) => ({ ...f, budget: b }))}
                         className={cn(
-                          "rounded-full border px-3.5 py-1.5 text-xs transition-colors",
+                          "rounded-full border px-3.5 py-1.5 text-xs transition-colors duration-300",
                           form.budget === b
-                            ? "border-ember bg-ember text-white"
+                            ? "border-bone bg-bone text-ink"
                             : "border-bone/20 text-bone/70 hover:border-bone/50"
                         )}
                       >

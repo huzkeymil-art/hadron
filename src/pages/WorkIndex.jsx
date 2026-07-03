@@ -17,7 +17,7 @@ export function WorkIndex() {
         <h1 className="display text-display-sm md:text-display">
           <RevealText text="Work that" />
           <br />
-          <span className="accent-serif text-ember">
+          <span className="accent-serif text-bone/95">
             <RevealText text="earns its keep." delay={0.08} />
           </span>
         </h1>
@@ -34,7 +34,7 @@ export function WorkIndex() {
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10% 0px" }}
-            transition={{ duration: 0.8, ease: EASE }}
+            transition={{ duration: 0.95, ease: EASE }}
             className={i % 2 === 1 ? "md:mt-16" : ""}
           >
             <Link to={`/work/${p.slug}`} data-cursor="View" className="group block">
@@ -47,21 +47,17 @@ export function WorkIndex() {
                   imgClassName="transition-transform duration-[1.2s] ease-expo group-hover:scale-[1.06]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/60 to-transparent opacity-60" />
-                <span
-                  className="absolute left-4 top-4 rounded-full px-3 py-1 font-mono text-[0.6rem] uppercase tracking-[0.16em] text-ink"
-                  style={{ backgroundColor: p.accent }}
-                >
-                  {p.category}
-                </span>
               </div>
               <div className="mt-5 flex items-start justify-between gap-6">
                 <div>
-                  <h2 className="text-2xl font-extrabold tracking-tight transition-colors duration-300 group-hover:text-ember md:text-3xl">
+                  <h2 className="text-2xl font-semibold tracking-tight text-bone/90 transition-colors duration-300 group-hover:text-bone md:text-3xl">
                     {p.client}
                   </h2>
                   <p className="mt-1 max-w-md text-pretty text-bone/55">{p.title}</p>
                 </div>
-                <span className="shrink-0 font-mono text-xs text-bone/45">{p.year}</span>
+                <span className="shrink-0 font-mono text-xs uppercase tracking-[0.14em] text-bone/45">
+                  {p.category} · {p.year}
+                </span>
               </div>
             </Link>
           </motion.div>

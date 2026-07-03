@@ -9,8 +9,8 @@ export function Pricing() {
   return (
     <section id="pricing" className="relative bg-ink">
       <div className="shell py-24 md:py-36">
-        <Chapter index={7} label="Pricing" meta="Fixed scope, no surprises" />
-        <div className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <Chapter index={7} label="Pricing" />
+        <div className="mb-16 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <h2 className="display text-display-sm">
             <RevealText text="Honest" />{" "}
             <span className="accent-serif text-bone/95">
@@ -29,25 +29,18 @@ export function Pricing() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-10% 0px" }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: i * 0.08 }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: i * 0.08 }}
               className={cn(
-                "flex flex-col rounded-xl border p-7 md:p-9",
-                tier.featured
-                  ? "border-ember bg-ember text-ink"
-                  : "border-bone/12 bg-ink-800 text-bone"
+                "flex flex-col border-t p-7 pt-8 md:p-9 md:pt-10",
+                tier.featured ? "border-ember bg-ink-800" : "border-bone/15 bg-ink-800/50"
               )}
             >
               <div className="flex items-center justify-between">
-                <span
-                  className={cn(
-                    "font-mono text-[0.7rem] uppercase tracking-[0.2em]",
-                    tier.featured ? "text-ink/60" : "text-bone/50"
-                  )}
-                >
+                <span className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-bone/50">
                   {tier.name}
                 </span>
                 {tier.featured && (
-                  <span className="rounded-full bg-ink px-3 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-bone">
+                  <span className="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-bone/60">
                     Most popular
                   </span>
                 )}
@@ -55,22 +48,18 @@ export function Pricing() {
 
               <div className="mt-8 flex items-end gap-2">
                 <span className="display text-[clamp(2.4rem,5vw,3.5rem)] leading-none">{tier.price}</span>
-                <span className={cn("mb-1 text-sm", tier.featured ? "text-ink/60" : "text-bone/45")}>
-                  / {tier.cadence}
-                </span>
+                <span className="mb-1 text-sm text-bone/45">/ {tier.cadence}</span>
               </div>
 
-              <p className={cn("mt-4 text-pretty text-sm leading-relaxed", tier.featured ? "text-ink/75" : "text-bone/60")}>
-                {tier.summary}
-              </p>
+              <p className="mt-4 text-pretty text-sm leading-relaxed text-bone/60">{tier.summary}</p>
 
-              <div className={cn("my-7 h-px w-full", tier.featured ? "bg-ink/20" : "bg-bone/12")} />
+              <div className="my-7 h-px w-full bg-bone/12" />
 
               <ul className="flex flex-1 flex-col gap-3">
                 {tier.features.map((f) => (
                   <li key={f} className="flex items-start gap-3 text-sm">
-                    <span className={tier.featured ? "text-ink" : "text-ember"}>✦</span>
-                    <span className={tier.featured ? "text-ink/85" : "text-bone/75"}>{f}</span>
+                    <span className="text-bone/35">—</span>
+                    <span className="text-bone/75">{f}</span>
                   </li>
                 ))}
               </ul>
@@ -80,10 +69,10 @@ export function Pricing() {
                   href="#contact"
                   data-cursor
                   className={cn(
-                    "flex items-center justify-between rounded-full px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.1em] transition-colors",
+                    "flex items-center justify-between rounded-full px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.1em] transition-colors duration-300",
                     tier.featured
-                      ? "bg-ink text-bone hover:bg-ink-700"
-                      : "bg-bone text-ink hover:bg-ember hover:text-white"
+                      ? "bg-ember text-white hover:bg-ember-deep"
+                      : "bg-bone text-ink hover:bg-bone-muted"
                   )}
                 >
                   Choose {tier.name}

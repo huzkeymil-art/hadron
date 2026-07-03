@@ -1,19 +1,22 @@
 import { clients } from "../data/content.js";
-import { Marquee } from "../components/Marquee.jsx";
+import { Reveal } from "../components/Reveal.jsx";
 
+/** A still row of names. The company you keep doesn't need to scroll by. */
 export function Clients() {
   return (
-    <section className="relative overflow-hidden border-y border-bone/10 bg-ink py-8">
-      <Marquee speed={30} className="edge-fade">
-        {clients.map((c) => (
-          <span
-            key={c}
-            className="mx-10 whitespace-nowrap text-2xl font-extrabold uppercase tracking-tight text-bone/30 transition-colors hover:text-bone md:text-4xl"
-          >
-            {c}
-          </span>
-        ))}
-      </Marquee>
+    <section className="relative border-y border-bone/10 bg-ink">
+      <div className="shell py-14">
+        <Reveal className="flex flex-wrap items-baseline justify-center gap-x-10 gap-y-4 md:gap-x-14">
+          {clients.map((c) => (
+            <span
+              key={c}
+              className="whitespace-nowrap text-lg font-semibold tracking-tight text-bone/30 transition-colors duration-300 hover:text-bone/70 md:text-2xl"
+            >
+              {c}
+            </span>
+          ))}
+        </Reveal>
+      </div>
     </section>
   );
 }

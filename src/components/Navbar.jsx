@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { nav, studio } from "../data/content.js";
 import { Logo } from "./Logo.jsx";
-import { Clock } from "./Clock.jsx";
 import { Magnetic } from "./Magnetic.jsx";
 import { cn } from "../lib/utils.js";
 
@@ -21,6 +20,7 @@ export function Navbar() {
     setHidden(y > prev && y > 420 && !open);
     setScrolled(y > 40);
   });
+  // (kept intentionally quick — the nav is chrome, not a performance)
 
   // Lock body scroll while the overlay menu is open.
   useEffect(() => {
@@ -35,7 +35,7 @@ export function Navbar() {
       <motion.header
         initial={{ y: -120 }}
         animate={{ y: hidden ? -120 : 0 }}
-        transition={{ duration: 0.5, ease: EASE }}
+        transition={{ duration: 0.3, ease: EASE }}
         className="fixed inset-x-0 top-0 z-[80]"
       >
         <div
@@ -61,7 +61,6 @@ export function Navbar() {
             </nav>
 
             <div className="flex items-center gap-5">
-              <Clock className="hidden font-mono text-[0.72rem] uppercase tracking-[0.12em] text-bone/70 lg:inline" />
               <Magnetic className="hidden sm:block">
                 <Link
                   to="/#contact"
@@ -82,10 +81,12 @@ export function Navbar() {
               >
                 <motion.span
                   animate={open ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+                  transition={{ duration: 0.25, ease: EASE }}
                   className="block h-[1.5px] w-7 bg-bone"
                 />
                 <motion.span
                   animate={open ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
+                  transition={{ duration: 0.25, ease: EASE }}
                   className="block h-[1.5px] w-7 bg-bone"
                 />
               </button>
@@ -108,7 +109,7 @@ function Overlay({ open, onClose }) {
           initial={{ clipPath: "inset(0 0 100% 0)" }}
           animate={{ clipPath: "inset(0 0 0% 0)" }}
           exit={{ clipPath: "inset(0 0 100% 0)" }}
-          transition={{ duration: 0.7, ease: [0.83, 0, 0.17, 1] }}
+          transition={{ duration: 0.9, ease: [0.83, 0, 0.17, 1] }}
         >
           <div className="shell flex flex-1 flex-col justify-center pt-24">
             <span className="eyebrow mb-8">Menu — where to?</span>
@@ -122,14 +123,16 @@ function Overlay({ open, onClose }) {
                   className="group flex items-baseline gap-5 border-b border-bone/10 py-3"
                 >
                   <span className="font-mono text-xs text-bone/40">0{i + 1}</span>
-                  <motion.span
-                    initial={{ y: "110%" }}
-                    animate={{ y: 0 }}
-                    transition={{ delay: 0.25 + i * 0.06, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                    className="display inline-block text-[clamp(2.4rem,9vw,6.5rem)] text-bone transition-colors duration-300 group-hover:text-ember"
-                  >
-                    {item.label}
-                  </motion.span>
+                  <span className="mask-line inline-block">
+                    <motion.span
+                      initial={{ y: "110%" }}
+                      animate={{ y: 0 }}
+                      transition={{ delay: 0.25 + i * 0.08, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                      className="display inline-block text-[clamp(2.4rem,9vw,6.5rem)] text-bone/70 transition-colors duration-300 group-hover:text-bone"
+                    >
+                      {item.label}
+                    </motion.span>
+                  </span>
                   <span className="ml-auto translate-y-[-0.4em] text-bone/30 opacity-0 transition group-hover:translate-x-2 group-hover:opacity-100">
                     ↗
                   </span>

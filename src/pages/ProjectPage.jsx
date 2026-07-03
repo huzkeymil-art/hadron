@@ -2,7 +2,6 @@ import { lazy, Suspense, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { projectBySlug, nextProject, signatures, secondaryScene } from "../data/projects.js";
-import { AnimatedCounter } from "../components/AnimatedCounter.jsx";
 import { Reveal } from "../components/Reveal.jsx";
 import { Media } from "../components/Media.jsx";
 import { Magnetic } from "../components/Magnetic.jsx";
@@ -58,12 +57,12 @@ export function ProjectPage() {
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: EASE }}
+            transition={{ duration: 0.9, ease: EASE }}
           >
             <Link
               to="/work"
               data-cursor
-              className="link-underline font-mono text-xs uppercase tracking-[0.16em] text-bone/70 hover:text-bone"
+              className="link-underline font-mono text-xs uppercase tracking-[0.14em] text-bone/70 hover:text-bone"
             >
               ← All work
             </Link>
@@ -73,31 +72,31 @@ export function ProjectPage() {
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15, duration: 0.6, ease: EASE }}
+              transition={{ delay: 0.15, duration: 0.9, ease: EASE }}
               className="mb-5 flex items-center gap-4"
             >
-              <span
-                className="rounded-full px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-ink"
-                style={{ backgroundColor: project.accent }}
-              >
+              <span className="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-bone/70">
                 {project.category}
               </span>
-              <span className="font-mono text-xs uppercase tracking-[0.16em] text-bone/55">
+              <span className="font-mono text-xs uppercase tracking-[0.14em] text-bone/55">
                 {project.client} — {project.year}
               </span>
             </motion.div>
 
             <h1 className="display max-w-[18ch] text-[clamp(2.4rem,7vw,6rem)]">
               {project.title.split(" ").map((w, i) => (
-                <span key={i} className="inline-block overflow-hidden align-bottom">
-                  <motion.span
-                    className="inline-block"
-                    initial={{ y: "110%" }}
-                    animate={{ y: 0 }}
-                    transition={{ delay: 0.25 + i * 0.04, duration: 0.9, ease: EASE }}
-                  >
-                    {w}&nbsp;
-                  </motion.span>
+                <span key={i}>
+                  {i > 0 && " "}
+                  <span className="mask-line inline-block align-bottom">
+                    <motion.span
+                      className="inline-block"
+                      initial={{ y: "110%" }}
+                      animate={{ y: 0 }}
+                      transition={{ delay: 0.25 + i * 0.05, duration: 1, ease: EASE }}
+                    >
+                      {w}
+                    </motion.span>
+                  </span>
                 </span>
               ))}
             </h1>
@@ -105,7 +104,7 @@ export function ProjectPage() {
             <motion.p
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.7, ease: EASE }}
+              transition={{ delay: 0.5, duration: 0.9, ease: EASE }}
               className="mt-7 max-w-xl text-pretty text-lg leading-relaxed text-bone/70"
             >
               {project.subtitle}
@@ -187,12 +186,11 @@ export function ProjectPage() {
         <div className="grid grid-cols-2 gap-x-8 gap-y-14 md:grid-cols-4">
           {project.metrics.map((m, i) => (
             <Reveal key={m.label} delay={i * 0.07}>
-              <AnimatedCounter
-                value={m.value}
-                suffix={m.suffix}
-                className="display block text-[clamp(2.6rem,6vw,5rem)] leading-none tracking-tighter"
-              />
-              <div className="mt-4 h-px w-10" style={{ backgroundColor: project.accent }} />
+              <span className="display nums block text-[clamp(2.6rem,6vw,5rem)] leading-none tracking-tighter">
+                {m.value}
+                {m.suffix}
+              </span>
+              <div className="mt-4 h-px w-10 bg-bone/25" />
               <p className="mt-4 max-w-[20ch] text-sm text-bone/55">{m.label}</p>
             </Reveal>
           ))}
@@ -211,8 +209,8 @@ export function ProjectPage() {
         <section className="border-y border-bone/10 bg-ink-800">
           <div className="shell py-20 md:py-28">
             <Reveal>
-              <blockquote className="max-w-4xl text-balance text-[clamp(1.5rem,3.4vw,2.6rem)] font-extrabold leading-[1.15] tracking-tight">
-                <span style={{ color: project.accent }}>“</span>
+              <blockquote className="max-w-4xl text-balance text-[clamp(1.5rem,3.4vw,2.6rem)] font-semibold leading-[1.15] tracking-tight">
+                <span className="text-bone/40">“</span>
                 {project.testimonial.quote}
               </blockquote>
               <figcaption className="mt-8 flex items-center gap-4">

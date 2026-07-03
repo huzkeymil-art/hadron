@@ -31,31 +31,25 @@ export function ArticlePage() {
       <Seo title={article.title} description={article.excerpt} image={article.cover} type="article" jsonLd={jsonLd} />
       {/* Hero */}
       <header className="shell pb-12 pt-32 md:pt-40">
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: EASE }}>
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: EASE }}>
           <Link to="/journal" data-cursor className="link-underline font-mono text-xs uppercase tracking-[0.16em] text-bone/70 hover:text-bone">
             ← Journal
           </Link>
         </motion.div>
 
         <div className="mt-8 flex items-center gap-4">
-          <span
-            className="rounded-full px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-ink"
-            style={{ backgroundColor: article.accent }}
-          >
+          <span className="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-bone/70">
             {article.tag}
           </span>
           <span className="font-mono text-xs text-bone/50">{article.date} · {article.readingTime}</span>
         </div>
 
-        <h1 className="mt-6 max-w-[20ch] text-balance text-[clamp(2.2rem,5.5vw,4.5rem)] font-extrabold leading-[1.05] tracking-tight">
+        <h1 className="mt-6 max-w-[20ch] text-balance text-[clamp(2.2rem,5.5vw,4.5rem)] font-semibold leading-[1.05] tracking-tight">
           {article.title}
         </h1>
 
         <div className="mt-8 flex items-center gap-3">
-          <div
-            className="flex h-11 w-11 items-center justify-center rounded-full text-sm font-bold text-ink"
-            style={{ backgroundColor: article.accent }}
-          >
+          <div className="flex h-11 w-11 items-center justify-center rounded-full border border-bone/20 text-sm font-semibold text-bone/80">
             {article.author.name.split(" ").map((n) => n[0]).join("")}
           </div>
           <div>
@@ -95,7 +89,7 @@ export function ArticlePage() {
                     className="group flex h-full flex-col justify-between gap-8 py-6 md:pr-10"
                   >
                     <span className="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-bone/55">{post.tag} · {post.readingTime}</span>
-                    <h3 className="text-pretty text-2xl font-bold leading-snug transition-colors group-hover:text-ember">
+                    <h3 className="text-pretty text-2xl font-bold leading-snug text-bone/90 transition-colors duration-300 group-hover:text-bone">
                       {post.title}
                     </h3>
                   </Link>
@@ -114,7 +108,7 @@ function Block({ block, accent }) {
     case "h2":
       return (
         <Reveal>
-          <h2 className="mt-14 text-balance text-2xl font-extrabold tracking-tight md:text-3xl">{block.text}</h2>
+          <h2 className="mt-14 text-balance text-2xl font-semibold tracking-tight md:text-3xl">{block.text}</h2>
         </Reveal>
       );
     case "quote":

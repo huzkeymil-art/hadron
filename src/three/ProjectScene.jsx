@@ -9,8 +9,8 @@ import { useCanvasActive, isCompactViewport } from "../hooks/useCanvasActive.js"
 function StudioEnv({ color }) {
   return (
     <Environment resolution={128}>
-      <Lightformer intensity={2.4} color={color} position={[-5, 2, 2]} scale={[9, 9, 1]} />
-      <Lightformer intensity={1.2} color="#3a6bff" position={[6, -2, 1]} scale={[7, 7, 1]} />
+      <Lightformer intensity={1.8} color={color} position={[-5, 2, 2]} scale={[9, 9, 1]} />
+      <Lightformer intensity={0.7} color="#d9d2c7" position={[6, -2, 1]} scale={[7, 7, 1]} />
       <Lightformer intensity={3} color="#fff3ea" position={[0, 6, -4]} scale={[12, 4, 1]} />
       <Lightformer intensity={0.7} color="#f4f1ea" position={[0, -6, 3]} scale={[10, 4, 1]} />
     </Environment>
@@ -24,7 +24,7 @@ function useParallax(ref, factor = 0.3) {
     pointer.current.x += (state.pointer.x - pointer.current.x) * 0.06;
     pointer.current.y += (state.pointer.y - pointer.current.y) * 0.06;
     if (ref.current) {
-      ref.current.rotation.y += delta * 0.18;
+      ref.current.rotation.y += delta * 0.1;
       ref.current.rotation.x +=
         (pointer.current.y * factor - ref.current.rotation.x) * 0.05;
     }
@@ -144,17 +144,17 @@ function Scene({ variant, color }) {
       <fog attach="fog" args={["#070707", 9, 17]} />
       <ambientLight intensity={0.2} />
       <directionalLight position={[5, 6, 4]} intensity={1.5} color="#fff5ee" />
-      <pointLight position={[-6, -2, 2]} intensity={32} color={color} distance={22} />
-      <pointLight position={[4, -4, -4]} intensity={11} color="#3a6bff" distance={18} />
+      <pointLight position={[-6, -2, 2]} intensity={22} color={color} distance={22} />
+      <pointLight position={[4, -4, -4]} intensity={5} color="#d9d2c7" distance={18} />
       {!usesPoints && <StudioEnv color={color} />}
       {usesPoints ? (
         <Obj color={color} />
       ) : (
-        <Float speed={1.3} rotationIntensity={0.35} floatIntensity={0.6}>
+        <Float speed={0.8} rotationIntensity={0.25} floatIntensity={0.4}>
           <Obj color={color} />
         </Float>
       )}
-      <Sparkles count={40} scale={[10, 7, 5]} size={1.3} speed={0.3} opacity={0.45} color={color} />
+      <Sparkles count={24} scale={[10, 7, 5]} size={1.2} speed={0.12} opacity={0.3} color="#d8cfc2" />
     </>
   );
 }

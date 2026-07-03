@@ -5,9 +5,9 @@ import { Chapter } from "../components/Chapter.jsx";
 export function Process() {
   return (
     <section className="relative bg-ink-800">
-      <div className="shell py-24 md:py-32">
-        <Chapter index={4} label="Process" meta="Four movements" />
-        <div className="mb-14">
+      <div className="shell py-32 md:py-40">
+        <Chapter index={4} label="Process" />
+        <div className="mb-16">
           <h2 className="display text-display-sm max-w-[16ch]">
             <RevealText text="How the work" />{" "}
             <span className="accent-serif text-bone/95">
@@ -16,7 +16,7 @@ export function Process() {
           </h2>
         </div>
 
-        <div className="grid gap-px overflow-hidden rounded-lg bg-bone/10 md:grid-cols-4">
+        <div className="grid gap-px overflow-hidden bg-bone/10 md:grid-cols-4">
           {process.map((step, i) => (
             <Reveal
               key={step.k}

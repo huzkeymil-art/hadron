@@ -9,8 +9,8 @@ export function Journal() {
 
   return (
     <section className="relative bg-ink-800">
-      <div className="shell py-24 md:py-32">
-        <Chapter index={10} label="Journal" meta="Notes from the studio" />
+      <div className="shell py-32 md:py-40">
+        <Chapter index={10} label="Journal" />
         <div className="mb-12 flex items-end justify-between border-b border-bone/10 pb-6">
           <h2 className="display text-display-sm">
             <RevealText text="Field" />{" "}
@@ -27,7 +27,7 @@ export function Journal() {
           </Link>
         </div>
 
-        <div className="grid gap-px overflow-hidden rounded-lg bg-bone/10 md:grid-cols-3">
+        <div className="grid gap-px overflow-hidden bg-bone/10 md:grid-cols-3">
           {posts.map((post, i) => (
             <Reveal key={post.slug} delay={i * 0.08}>
               <Link
@@ -36,13 +36,13 @@ export function Journal() {
                 className="group flex h-full min-h-[18rem] flex-col justify-between bg-ink-800 p-7 transition-colors duration-500 hover:bg-ink-700"
               >
                 <div className="flex items-center justify-between">
-                  <span className="rounded-full border border-bone/15 px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-bone/55">
+                  <span className="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-bone/55">
                     {post.tag}
                   </span>
                   <span className="font-mono text-xs text-bone/40">{post.date}</span>
                 </div>
                 <div className="mt-10">
-                  <h3 className="text-pretty text-xl font-bold leading-snug transition-colors group-hover:text-ember">
+                  <h3 className="text-pretty text-xl font-bold leading-snug text-bone/90 transition-colors duration-300 group-hover:text-bone">
                     {post.title}
                   </h3>
                   <p className="mt-3 text-sm leading-relaxed text-bone/50">{post.excerpt}</p>

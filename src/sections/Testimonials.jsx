@@ -10,8 +10,8 @@ export function Testimonials() {
 
   return (
     <section className="relative bg-ink-800">
-      <div className="shell py-24 md:py-36">
-        <Chapter index={8} label="What clients say" meta="Verbatim" />
+      <div className="shell py-32 md:py-44">
+        <Chapter index={8} label="What clients say" />
         <div className="mb-12 flex items-center justify-end">
           <div className="flex items-center gap-3">
             <NavBtn onClick={() => go(-1)} label="Previous">←</NavBtn>
@@ -28,15 +28,15 @@ export function Testimonials() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -24 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           >
             <blockquote className="accent-serif max-w-[22ch] text-balance text-[clamp(1.8rem,4.6vw,3.6rem)] leading-[1.12] md:max-w-[28ch]">
-              <span className="text-ember">“</span>
+              <span className="text-bone/40">“</span>
               {t.quote}
-              <span className="text-ember">”</span>
+              <span className="text-bone/40">”</span>
             </blockquote>
             <figcaption className="mt-10 flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-ember text-sm font-bold text-white">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full border border-bone/20 text-sm font-semibold text-bone/80">
                 {t.name.split(" ").map((n) => n[0]).join("")}
               </div>
               <div>
@@ -57,7 +57,7 @@ function NavBtn({ children, onClick, label }) {
       onClick={onClick}
       aria-label={label}
       data-cursor
-      className="flex h-11 w-11 items-center justify-center rounded-full border border-bone/20 text-bone/80 transition-colors hover:border-ember hover:bg-ember hover:text-white"
+      className="flex h-11 w-11 items-center justify-center rounded-full border border-bone/20 text-bone/80 transition-colors duration-300 hover:border-bone/60 hover:text-bone"
     >
       {children}
     </button>

@@ -8,7 +8,6 @@
   --ember: #ff3d00;
   --line: rgba(244, 241, 234, 0.12);
   --gutter: clamp(1.25rem, 4vw, 4rem);
-  --spectrum: linear-gradient(92deg, #ff3d00 0%, #ff8a3d 55%, #8b5cf6 130%);
 }
 
 @layer base {
@@ -62,7 +61,7 @@
   }
 
   h1, h2, h3, h4 {
-    @apply font-display font-bold tracking-tighter leading-[0.92];
+    @apply font-display font-medium tracking-tighter leading-[0.98];
     text-wrap: balance;
   }
 
@@ -76,7 +75,7 @@
   ::-webkit-scrollbar { width: 9px; }
   ::-webkit-scrollbar-track { background: #0a0a0a; }
   ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 999px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--ember); }
+  ::-webkit-scrollbar-thumb:hover { background: #3d3d3d; }
 }
 
 @layer components {
@@ -85,9 +84,9 @@
     @apply mx-auto w-full max-w-[1600px] px-[var(--gutter)];
   }
 
-  /* Monospace eyebrow label */
+  /* Monospace eyebrow label — the one permitted uppercase register */
   .eyebrow {
-    @apply font-mono text-[0.7rem] uppercase tracking-[0.28em] text-bone/60;
+    @apply font-mono text-[0.7rem] uppercase tracking-[0.14em] text-bone/55;
   }
 
   .hairline {
@@ -99,9 +98,9 @@
     font-variant-numeric: tabular-nums;
   }
 
-  /* The big Swiss display headline */
+  /* The big display headline — sentence case, quiet weight; scale does the talking. */
   .display {
-    @apply font-display font-bold uppercase tracking-tighter leading-[0.88];
+    @apply font-display font-medium tracking-tighter leading-[0.96];
   }
 
   /* Italic serif accent word inside a display headline — the editorial counterpoint. */
@@ -109,23 +108,17 @@
     @apply font-serif font-normal italic normal-case tracking-normal;
   }
 
-  /* Spectral gradient text for signature moments. Use sparingly. */
-  .text-spectrum {
-    background: var(--spectrum);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
   /* Chapter header row used at the top of every section. */
   .chapter {
-    @apply mb-10 flex items-baseline justify-between gap-6 border-t border-bone/15 pt-4;
+    @apply mb-12 flex items-baseline justify-between gap-6 border-t border-bone/15 pt-4;
   }
 
-  /* Outline / stroke text used for oversized background type */
-  .stroke-text {
-    -webkit-text-stroke: 1px rgba(244, 241, 234, 0.35);
-    color: transparent;
+  /* Overflow mask for line/word reveals. The padding + negative margin keeps
+     descenders (g, j, p, y) from clipping at display line-heights below 1. */
+  .mask-line {
+    overflow: hidden;
+    padding-bottom: 0.12em;
+    margin-bottom: -0.12em;
   }
 
   .link-underline {
@@ -149,11 +142,6 @@
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  /* mask used to fade marquees at the edges */
-  .edge-fade {
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-  }
 }
 
 /* Respect reduced-motion: kill transforms/animations for those who ask. */

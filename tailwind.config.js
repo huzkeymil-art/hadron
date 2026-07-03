@@ -21,8 +21,6 @@ export default {
           bright: "#ff4d12",
           deep: "#e2330a",
         },
-        plasma: "#ff8a3d",
-        ion: "#8b5cf6",
       },
       fontFamily: {
         sans: [
@@ -61,20 +59,6 @@ export default {
       transitionTimingFunction: {
         expo: "cubic-bezier(0.16, 1, 0.3, 1)",
         "in-out-quint": "cubic-bezier(0.83, 0, 0.17, 1)",
-      },
-      keyframes: {
-        marquee: {
-          "0%": { transform: "translateX(0)" },
-          "100%": { transform: "translateX(-50%)" },
-        },
-        "spin-slow": {
-          "0%": { transform: "rotate(0deg)" },
-          "100%": { transform: "rotate(360deg)" },
-        },
-      },
-      animation: {
-        marquee: "marquee 28s linear infinite",
-        "spin-slow": "spin-slow 14s linear infinite",
       },
     },
   },
