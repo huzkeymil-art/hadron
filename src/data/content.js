@@ -26,19 +26,13 @@ export const nav = [
 
 export const hero = {
   eyebrow: "Design & Engineering Studio",
-  // Split into lines so we can stagger-reveal each one.
-  headline: ["We engineer", "websites that", "move markets."],
+  // The headline itself lives in Hero.jsx — its line breaks, serif accent and
+  // ember word are art direction, not copy.
   lead: "Hadron is a small, senior studio that turns ambitious brands into the fastest, sharpest version of themselves on the web — strategy, design, and code under one roof.",
-  meta: [
-    { k: "Est.", v: "2018" },
-    { k: "Projects", v: "47+" },
-    { k: "Avg. Lighthouse", v: "98" },
-  ],
 };
 
 export const manifesto = {
   kicker: "Our belief",
-  lines: ["Strategy", "before", "pixels."],
   body: "Anyone can push pixels. We start with the uncomfortable questions — who is this really for, what should it do to the bottom line, and what gets cut. Every result we ship started with a problem worth solving.",
 };
 

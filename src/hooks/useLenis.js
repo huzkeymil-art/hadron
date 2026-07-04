@@ -33,6 +33,8 @@ export function useLenis() {
     const onClick = (e) => {
       const a = e.target.closest('a[href^="#"]');
       if (!a) return;
+      // The skip link must keep native behavior: jump AND move focus.
+      if (a.classList.contains("skip-link")) return;
       const id = a.getAttribute("href");
       if (!id || id === "#") return;
       const el = document.querySelector(id);

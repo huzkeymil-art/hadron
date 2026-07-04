@@ -10,7 +10,7 @@ export function Clients() {
           {clients.map((c) => (
             <span
               key={c}
-              className="whitespace-nowrap text-lg font-semibold tracking-tight text-bone/30 transition-colors duration-300 hover:text-bone/70 md:text-2xl"
+              className="whitespace-nowrap text-lg font-semibold tracking-tight text-bone/50 transition-colors duration-300 hover:text-bone/90 md:text-2xl"
             >
               {c}
             </span>

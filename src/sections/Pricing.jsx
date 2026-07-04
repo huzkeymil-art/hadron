@@ -48,7 +48,7 @@ export function Pricing() {
 
               <div className="mt-8 flex items-end gap-2">
                 <span className="display text-[clamp(2.4rem,5vw,3.5rem)] leading-none">{tier.price}</span>
-                <span className="mb-1 text-sm text-bone/45">/ {tier.cadence}</span>
+                <span className="mb-1 text-sm text-bone/55">/ {tier.cadence}</span>
               </div>
 
               <p className="mt-4 text-pretty text-sm leading-relaxed text-bone/60">{tier.summary}</p>
@@ -83,7 +83,7 @@ export function Pricing() {
           ))}
         </div>
 
-        <p className="mt-10 text-center text-sm text-bone/45">
+        <p className="mt-10 text-center text-sm text-bone/55">
           Need something bespoke?{" "}
           <a href="#contact" className="link-underline text-bone/80">
             Let's scope it together

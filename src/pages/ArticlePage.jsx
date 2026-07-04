@@ -140,7 +140,7 @@ function Block({ block, accent }) {
             <div className="h-[40vh] overflow-hidden rounded-lg md:h-[52vh]">
               <Media src={block.src} alt={block.caption || ""} accent={accent} className="h-full w-full" />
             </div>
-            {block.caption && <figcaption className="mt-3 text-center text-sm text-bone/45">{block.caption}</figcaption>}
+            {block.caption && <figcaption className="mt-3 text-center text-sm text-bone/55">{block.caption}</figcaption>}
           </figure>
         </Reveal>
       );

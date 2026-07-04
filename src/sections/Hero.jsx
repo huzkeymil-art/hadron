@@ -1,6 +1,7 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useContext, useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { hero } from "../data/content.js";
+import { RevealContext } from "../App.jsx";
 import { ErrorBoundary } from "../components/ErrorBoundary.jsx";
 import { HeroFallback } from "../three/HeroFallback.jsx";
 import { isWebGLAvailable } from "../lib/utils.js";
@@ -9,13 +10,13 @@ import { EASE } from "../lib/motion.js";
 // Isolate the heavy Three.js bundle so it loads after first paint.
 const BlackHoleScene = lazy(() => import("../three/BlackHoleScene.jsx"));
 
-/* Masked line reveal for the big headline. */
-function Line({ children, delay }) {
+/* Masked line reveal for the big headline — waits for the preloader curtain. */
+function Line({ children, delay, ready }) {
   return (
     <span className="mask-line block">
       <motion.span
         initial={{ y: "112%" }}
-        animate={{ y: 0 }}
+        animate={ready ? { y: 0 } : { y: "112%" }}
         transition={{ delay, duration: 1.1, ease: EASE.out }}
         className="inline-block will-change-transform"
       >
@@ -27,6 +28,7 @@ function Line({ children, delay }) {
 
 export function Hero() {
   const reduceMotion = useReducedMotion();
+  const ready = useContext(RevealContext);
   // Decide once, on the client, whether to mount the 3D scene at all.
   const [use3D] = useState(() => !reduceMotion && isWebGLAvailable());
 
@@ -78,8 +80,8 @@ export function Hero() {
       <div className="shell relative flex min-h-[100svh] flex-col justify-end pb-24 pt-32">
         <motion.span
           initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25, duration: 0.9, ease: EASE.out }}
+          animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+          transition={{ delay: 0.2, duration: 0.9, ease: EASE.out }}
           className="eyebrow mb-8 block"
         >
           {hero.eyebrow}
@@ -87,11 +89,11 @@ export function Hero() {
         </motion.span>
 
         <h1 className="display text-[clamp(3.1rem,11vw,11.5rem)]">
-          <Line delay={0.4}>We engineer</Line>
-          <Line delay={0.5}>
+          <Line ready={ready} delay={0.35}>We engineer</Line>
+          <Line ready={ready} delay={0.45}>
             <span className="accent-serif pr-[0.06em] text-bone/95">websites</span> that move
           </Line>
-          <Line delay={0.6}>
+          <Line ready={ready} delay={0.55}>
             <span className="text-ember">markets.</span>
           </Line>
         </h1>
@@ -100,8 +102,8 @@ export function Hero() {
         <div className="mt-12 flex justify-end">
           <motion.p
             initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.05, duration: 1, ease: EASE.out }}
+            animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
+            transition={{ delay: 1.0, duration: 1, ease: EASE.out }}
             className="max-w-md text-pretty text-base leading-relaxed text-bone/70 md:mr-[8%]"
           >
             {hero.lead}
@@ -112,8 +114,8 @@ export function Hero() {
       {/* Scroll cue — a label and a hairline, at rest */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.6, duration: 1.2, ease: EASE.out }}
+        animate={ready ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ delay: 1.5, duration: 1.2, ease: EASE.out }}
         className="absolute bottom-28 right-[var(--gutter)] z-10 hidden flex-col items-center gap-4 md:flex"
       >
         <span className="font-mono text-[0.6rem] uppercase tracking-[0.2em] text-bone/45 [writing-mode:vertical-rl]">

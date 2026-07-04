@@ -37,7 +37,7 @@ export function Services() {
                   <span className="font-mono text-sm text-ember">{s.id}</span>
                   <span
                     className={`display text-[clamp(2rem,6vw,4.5rem)] leading-none transition-colors duration-500 ${
-                      open ? "text-bone" : "text-bone/35"
+                      open ? "text-bone" : "text-bone/45"
                     }`}
                   >
                     {s.title}

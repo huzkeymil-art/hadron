@@ -18,8 +18,9 @@ export function RevealText({ text, as = "span", className, delay = 0, stagger = 
       whileInView="show"
       viewport={{ once: true, margin: "-12% 0px" }}
       transition={{ staggerChildren: stagger, delayChildren: delay }}
-      aria-label={text}
     >
+      {/* accessible name — aria-label is unreliable on generic spans */}
+      <span className="sr-only">{text}</span>
       {words.map((word, i) => (
         <span key={i} aria-hidden>
           {/* the space lives OUTSIDE the overflow mask so it never collapses */}

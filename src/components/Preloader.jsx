@@ -6,9 +6,10 @@ const EASE = [0.83, 0, 0.17, 1];
 /**
  * Full-screen intro, kept quiet: the wordmark holds the frame while a hairline
  * fills to 100, then the panel lifts to reveal the site. One element, one move.
- * Calls `onDone` when gone.
+ * `onReveal` fires the moment the lift begins (the page starts its entrance
+ * choreography under the rising curtain); `onDone` fires once the panel is gone.
  */
-export function Preloader({ onDone }) {
+export function Preloader({ onReveal, onDone }) {
   const [count, setCount] = useState(0);
   const [done, setDone] = useState(false);
 
@@ -23,11 +24,15 @@ export function Preloader({ onDone }) {
       if (n < 100) {
         timer = setTimeout(tick, 80);
       } else {
-        timer = setTimeout(() => setDone(true), 420);
+        timer = setTimeout(() => {
+          setDone(true);
+          onReveal?.();
+        }, 420);
       }
     };
     timer = setTimeout(tick, 260);
     return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
