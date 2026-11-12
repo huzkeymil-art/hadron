@@ -55,7 +55,7 @@ export function Work() {
                 </span>
 
                 <span className="col-start-2 flex flex-wrap gap-x-3 gap-y-1 md:col-start-4 md:justify-end">
-                  <span className="font-mono text-xs text-bone/45">{isPlaceholder(p.status) ? p.category : p.status}</span>
+                  {!isPlaceholder(p.status) && <span className="font-mono text-xs text-bone/45">{p.status}</span>}
                 </span>
               </Link>
             </li>
