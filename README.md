@@ -1,5 +1,9 @@
 # Hadron Studio
 
+> **Content placeholders:** anything in the site copy that starts with `[Add` still needs real info before going live. Run `grep -rn "\[Add" src` to list them. Project data lives in `src/data/projects.js`; all other copy is in `src/data/content.js`.
+>
+> **Contact form:** set `CONTACT_WEBHOOK_URL` in Vercel to have enquiries sent straight to you. Without it, the form opens the visitor's email app with the message pre-filled, so nothing is lost.
+
 **A design & engineering studio website that looks like it costs a million bucks.**
 
 A complete, production-grade revamp of `hadronstudio.com` — a bold, Swiss-inspired

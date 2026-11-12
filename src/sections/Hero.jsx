@@ -30,7 +30,15 @@ export function Hero() {
   const reduceMotion = useReducedMotion();
   const ready = useContext(RevealContext);
   // Decide once, on the client, whether to mount the 3D scene at all.
-  const [use3D] = useState(() => !reduceMotion && isWebGLAvailable());
+  // Phones and tablets get the static SVG version: same look, none of the
+  // ~600 KB Three.js download or the battery cost.
+  const [use3D] = useState(
+    () =>
+      !reduceMotion &&
+      typeof window !== "undefined" &&
+      window.matchMedia("(min-width: 900px) and (hover: hover) and (pointer: fine)").matches &&
+      isWebGLAvailable()
+  );
 
   // House lights: the scene dims and drifts as content scrolls over it.
   // Scroll-linked, so the user conducts it — nothing plays on its own.
@@ -85,16 +93,15 @@ export function Hero() {
           className="eyebrow mb-8 block"
         >
           {hero.eyebrow}
-          <span className="hidden sm:inline"> — Brooklyn, NY</span>
         </motion.span>
 
         <h1 className="display text-[clamp(3.1rem,11vw,11.5rem)]">
-          <Line ready={ready} delay={0.35}>We engineer</Line>
+          <Line ready={ready} delay={0.35}>Websites and</Line>
           <Line ready={ready} delay={0.45}>
-            <span className="accent-serif pr-[0.06em] text-bone/95">websites</span> that move
+            <span className="accent-serif pr-[0.06em] text-bone/95">apps</span> built to
           </Line>
           <Line ready={ready} delay={0.55}>
-            <span className="text-ember">markets.</span>
+            <span className="text-ember">stand out.</span>
           </Line>
         </h1>
 

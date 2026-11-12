@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 
 const SITE = "Hadron Studio";
-const DEFAULT_TITLE = "Hadron Studio — We engineer websites that move markets";
+const DEFAULT_TITLE = "Hadron Studio — Websites and apps built to stand out";
+// Always point search engines at the www address, which is where the site lives.
+const SITE_URL = "https://www.hadronstudio.com";
 
 function upsert(selector, create) {
   let el = document.head.querySelector(selector);
@@ -51,7 +53,7 @@ export function Seo({ title, description, image, type = "website", jsonLd }) {
       l.setAttribute("rel", "canonical");
       return l;
     });
-    canonical.setAttribute("href", window.location.origin + window.location.pathname);
+    canonical.setAttribute("href", SITE_URL + window.location.pathname);
 
     // Per-page structured data
     let ld;

@@ -6,7 +6,7 @@ export function Process() {
   return (
     <section className="relative bg-ink-800">
       <div className="shell py-32 md:py-40">
-        <Chapter index={4} label="Process" />
+        <Chapter index={3} label="Process" />
         <div className="mb-16">
           <h2 className="display text-display-sm max-w-[16ch]">
             <RevealText text="How the work" />{" "}
