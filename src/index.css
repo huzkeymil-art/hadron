@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 :root {
-  --ink: #070707;
-  --bone: #f4f1ea;
-  --ember: #ff3d00;
-  --line: rgba(244, 241, 234, 0.12);
+  --ink: #f3f1ec;
+  --bone: #15161a;
+  --ember: #2b4bff;
+  --line: rgba(21, 22, 26, 0.1);
   --gutter: clamp(1.25rem, 4vw, 4rem);
 }
 
@@ -24,6 +24,11 @@
 
   body {
     @apply bg-ink text-bone font-sans antialiased;
+    /* Faint graph-paper grid behind everything */
+    background-image:
+      linear-gradient(rgba(21, 22, 26, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(21, 22, 26, 0.045) 1px, transparent 1px);
+    background-size: 32px 32px;
     font-feature-settings: "ss01", "cv01", "kern";
     font-optical-sizing: auto;
     overflow-x: hidden;
@@ -61,21 +66,15 @@
   }
 
   h1, h2, h3, h4 {
-    @apply font-display font-medium tracking-tighter leading-[0.98];
+    @apply font-display font-normal tracking-tighter leading-[0.98];
     text-wrap: balance;
-  }
-
-  /* Hide default cursor on devices that have a fine pointer (custom cursor takes over). */
-  @media (hover: hover) and (pointer: fine) {
-    body { cursor: none; }
-    a, button, [data-cursor] { cursor: none; }
   }
 
   /* Thin, brand-tinted scrollbar */
   ::-webkit-scrollbar { width: 9px; }
-  ::-webkit-scrollbar-track { background: #0a0a0a; }
-  ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 999px; }
-  ::-webkit-scrollbar-thumb:hover { background: #3d3d3d; }
+  ::-webkit-scrollbar-track { background: #ebe8e1; }
+  ::-webkit-scrollbar-thumb { background: #c9c4b8; border-radius: 999px; }
+  ::-webkit-scrollbar-thumb:hover { background: #aaa49a; }
 }
 
 @layer components {
@@ -100,7 +99,8 @@
 
   /* The big display headline — sentence case, quiet weight; scale does the talking. */
   .display {
-    @apply font-display font-medium tracking-tighter leading-[0.96];
+    @apply font-display font-normal tracking-tighter leading-[0.96];
+    font-variation-settings: "opsz" 144, "SOFT" 50;
   }
 
   /* Italic serif accent word inside a display headline — the editorial counterpoint. */

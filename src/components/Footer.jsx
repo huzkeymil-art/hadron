@@ -63,7 +63,7 @@ export function Footer() {
             © {year} Hadron Studio — All rights reserved
           </p>
           <p className="font-mono text-xs uppercase tracking-[0.14em] text-bone/45">
-            Built with React · Three.js · Node
+            Built with React · Vite · Node
           </p>
         </div>
       </div>

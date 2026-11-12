@@ -24,9 +24,9 @@ export function ProjectCover({ project, className, imgClassName, priority = fals
     <div
       role="img"
       aria-label={`${project.name} cover`}
-      className={cn("relative flex items-end overflow-hidden bg-ink-700", className)}
+      className={cn("relative flex items-end overflow-hidden bg-ink-800", className)}
       style={{
-        background: `radial-gradient(90% 90% at 75% 20%, ${project.accent}55, transparent 60%), radial-gradient(70% 70% at 10% 100%, ${project.accent}22, transparent 70%), #101010`,
+        background: `radial-gradient(90% 90% at 75% 20%, ${project.accent}55, transparent 60%), radial-gradient(70% 70% at 10% 100%, ${project.accent}22, transparent 70%), #ebe8e1`,
       }}
     >
       <svg aria-hidden viewBox="0 0 200 200" className="absolute right-[-10%] top-[-10%] h-[90%] opacity-40">

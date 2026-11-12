@@ -1,12 +1,9 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { AnimatePresence, MotionConfig, motion } from "framer-motion";
 import { useLenis } from "./hooks/useLenis.js";
 import { EASE } from "./lib/motion.js";
 
-import { Preloader } from "./components/Preloader.jsx";
-import { Cursor } from "./components/Cursor.jsx";
-import { Grain } from "./components/Grain.jsx";
 import { ScrollManager } from "./components/ScrollManager.jsx";
 import { Navbar } from "./components/Navbar.jsx";
 import { Footer } from "./components/Footer.jsx";
@@ -22,30 +19,16 @@ import { NotFound } from "./pages/NotFound.jsx";
 export const RevealContext = createContext(true);
 
 export default function App() {
-  // revealed: the preloader has started its lift — begin the choreography.
-  // gone: the lift finished — unmount the preloader.
-  const [revealed, setRevealed] = useState(false);
-  const [gone, setGone] = useState(false);
+  // Fresh look: no preloader curtain, the page is ready the moment it loads.
+  const revealed = true;
   const location = useLocation();
   useLenis();
-
-  // The covered page shouldn't be reachable by keyboard or AT while the
-  // preloader is up.
-  useEffect(() => {
-    const els = document.querySelectorAll("header, main, footer");
-    els.forEach((el) => {
-      el.inert = !revealed;
-    });
-  }, [revealed]);
 
   return (
     <MotionConfig reducedMotion="user">
       <a href="#main-content" className="skip-link">
         Skip to content
       </a>
-      {!gone && <Preloader onReveal={() => setRevealed(true)} onDone={() => setGone(true)} />}
-      <Cursor />
-      <Grain />
       <ScrollManager />
       <Navbar />
 
