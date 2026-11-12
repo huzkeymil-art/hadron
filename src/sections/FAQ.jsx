@@ -10,7 +10,7 @@ export function FAQ() {
   return (
     <section className="relative bg-ink">
       <div className="shell py-32 md:py-40">
-        <Chapter index={9} label="FAQ" />
+        <Chapter index={4} label="FAQ" />
         <div className="grid gap-12 md:grid-cols-[0.8fr_1.2fr]">
         <div>
           <h2 className="display text-display-sm max-w-[10ch]">

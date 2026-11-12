@@ -10,13 +10,13 @@ export function Services() {
   return (
     <section id="services" className="relative bg-ink">
       <div className="shell py-32 md:py-44">
-        <Chapter index={2} label="What we do" />
+        <Chapter index={1} label="Services" />
         <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <h2 className="display text-display-sm max-w-[12ch]">
-            <RevealText text="What we do" as="span" />
+            <RevealText text="What Hadron makes" as="span" />
           </h2>
           <p className="max-w-sm text-pretty text-bone/60">
-            Three disciplines, one team. No handoffs, no translation tax — the people who design it are the people who build it.
+            Websites, apps, and the content around them. Designed and built by the same person, so the idea survives all the way to launch.
           </p>
         </div>
 

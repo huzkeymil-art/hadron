@@ -5,6 +5,8 @@ import { projects } from "../data/projects.js";
 import { RevealText } from "../components/Reveal.jsx";
 import { Chapter } from "../components/Chapter.jsx";
 import { useHasPointer } from "../hooks/useMediaQuery.js";
+import { ProjectCover } from "../components/ProjectCover.jsx";
+import { isPlaceholder } from "../data/projects.js";
 
 export function Work() {
   const hasPointer = useHasPointer();
@@ -22,12 +24,12 @@ export function Work() {
   return (
     <section id="work" className="relative bg-ink" onMouseMove={hasPointer ? onMove : undefined}>
       <div className="shell py-32 md:py-44">
-        <Chapter index={3} label="Selected work" />
+        <Chapter index={2} label="Selected work" />
         <div className="mb-16 border-b border-bone/10 pb-8">
           <h2 className="display text-display-sm">
-            <RevealText text="Work that" />{" "}
+            <RevealText text="Things I've" />{" "}
             <span className="accent-serif text-bone/95">
-              <RevealText text="performs." delay={0.08} />
+              <RevealText text="built." delay={0.08} />
             </span>
           </h2>
         </div>
@@ -45,7 +47,7 @@ export function Work() {
                 <span className="font-mono text-xs text-bone/40">0{i + 1}</span>
 
                 <span className="display text-[clamp(1.7rem,5.5vw,4rem)] leading-none text-bone/60 transition-[transform,color] duration-500 ease-expo group-hover:translate-x-3 group-hover:text-bone">
-                  {p.client}
+                  {p.name}
                 </span>
 
                 <span className="hidden font-mono text-[0.7rem] uppercase tracking-[0.14em] text-bone/45 md:block">
@@ -53,7 +55,7 @@ export function Work() {
                 </span>
 
                 <span className="col-start-2 flex flex-wrap gap-x-3 gap-y-1 md:col-start-4 md:justify-end">
-                  <span className="font-mono text-xs text-bone/45">{p.year}</span>
+                  {!isPlaceholder(p.status) && <span className="font-mono text-xs text-bone/45">{p.status}</span>}
                 </span>
               </Link>
             </li>
@@ -87,13 +89,7 @@ export function Work() {
                 transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                 className="relative h-full w-full"
               >
-                <img
-                  src={projects[active].cover}
-                  alt={projects[active].client}
-                  loading="lazy"
-                  className="h-full w-full object-cover"
-                />
-                <div className="absolute inset-0 bg-ink/20" />
+                <ProjectCover project={projects[active]} className="h-full w-full" />
               </motion.div>
             )}
           </AnimatePresence>

@@ -1,202 +1,103 @@
-// Single source of truth for all on-page copy. Keeping it here makes the
-// sections declarative and trivial to wire to a CMS later.
+// Single source of truth for all on-page copy.
+//
+// Anything in [square brackets] starting with "Add" is a placeholder Max still
+// needs to fill in before this goes live. Search the repo for "[Add" to find
+// every one.
+
+export const SITE_URL = "https://www.hadronstudio.com";
 
 export const studio = {
   name: "Hadron Studio",
   shortName: "Hadron",
-  email: "studio@hadronstudio.com",
-  phone: "+1 (555) 204-0192",
-  location: "Brooklyn, NY — working worldwide",
-  socials: [
-    { label: "Instagram", href: "https://instagram.com" },
-    { label: "Dribbble", href: "https://dribbble.com" },
-    { label: "LinkedIn", href: "https://linkedin.com" },
-    { label: "GitHub", href: "https://github.com" },
-  ],
+  founder: "Max Miller",
+  founderRole: "Founder & Creative Developer",
+  // [Add: confirm this is the inbox you want on hadronstudio.com]
+  email: "hello@hadronwebdesign.com",
+  location: "Remote — working with clients anywhere",
+  // Real profile links only. Leave empty to hide the socials row everywhere.
+  socials: [],
 };
 
 export const nav = [
   { label: "Work", to: "/work" },
-  { label: "Studio", to: "/studio" },
+  { label: "About", to: "/about" },
   { label: "Services", to: "/#services" },
-  { label: "Pricing", to: "/#pricing" },
-  { label: "Journal", to: "/journal" },
   { label: "Contact", to: "/#contact" },
 ];
 
 export const hero = {
-  eyebrow: "Design & Engineering Studio",
-  // The headline itself lives in Hero.jsx — its line breaks, serif accent and
-  // ember word are art direction, not copy.
-  lead: "Hadron is a small, senior studio that turns ambitious brands into the fastest, sharpest version of themselves on the web — strategy, design, and code under one roof.",
-};
-
-export const manifesto = {
-  kicker: "Our belief",
-  body: "Anyone can push pixels. We start with the uncomfortable questions — who is this really for, what should it do to the bottom line, and what gets cut. Every result we ship started with a problem worth solving.",
+  eyebrow: "Design & Development Studio",
+  lead: "Hadron is an independent studio that designs and builds websites, apps, and the brand content around them. One person from first sketch to launch, so nothing gets lost in a handoff.",
 };
 
 export const services = [
   {
     id: "01",
-    title: "Strategy",
+    title: "Websites",
     blurb:
-      "Positioning, narrative and the hard decisions made before a single pixel. We pressure-test the idea so the build never wobbles.",
-    points: ["Brand & narrative", "Information architecture", "Conversion strategy", "Competitive teardown"],
+      "Custom websites that load fast, look sharp on every screen, and make it obvious what to do next.",
+    points: ["Business & landing sites", "React builds", "3D & motion moments", "Speed & SEO basics"],
   },
   {
     id: "02",
-    title: "Design",
+    title: "Apps",
     blurb:
-      "Art direction and interface design with an obsessive eye for type, grid and motion. Distinctive, never decorative.",
-    points: ["Art direction", "Design systems", "Motion design", "Prototyping"],
+      "iOS and web apps taken from an idea to something people can actually tap through and use.",
+    points: ["iOS apps", "Web apps on Base44", "AI-powered features", "Clickable prototypes"],
   },
   {
     id: "03",
-    title: "Engineering",
+    title: "Brand & content",
     blurb:
-      "React, Three.js and WebGL builds that stay fast under real-world load. Beautiful is the floor; performant is the standard.",
-    points: ["React / Next", "Three.js & WebGL", "Headless CMS", "Performance & SEO"],
+      "The visuals around the product: graphics, video, and social posts that match the site.",
+    points: ["Adobe Creative Cloud", "Video editing & color", "Social media content", "Launch marketing"],
   },
 ];
 
-// Project case studies live in ./projects.js; articles live in ./journal.js.
-// Re-exported here so existing imports keep working.
 export { projects } from "./projects.js";
-export { journal } from "./journal.js";
 
 export const process = [
-  { k: "01", title: "Discover", body: "Workshops, audits and a sharp brief. We align on the single metric that matters." },
-  { k: "02", title: "Design", body: "Art direction, systems and motion. We prototype in-browser, not just in Figma." },
-  { k: "03", title: "Build", body: "Senior engineers ship production React. No handoff gap, no agency translation tax." },
-  { k: "04", title: "Launch & grow", body: "We measure, iterate and stay on as a partner well past go-live." },
-];
-
-export const stats = [
-  { value: 2.06, suffix: "M", label: "Users reached across launches" },
-  { value: 160, suffix: "K", label: "Avg. monthly sessions delivered" },
-  { value: 98, suffix: "", label: "Lighthouse performance median" },
-  { value: 47, suffix: "+", label: "Brands shipped since 2018" },
-];
-
-export const pricing = [
-  {
-    id: "foundation",
-    name: "Foundation",
-    price: "$8,500",
-    cadence: "fixed project",
-    summary: "A sharp marketing site for teams that need to launch credibly, fast.",
-    features: ["Up to 6 sections", "Custom design system", "Framer Motion interactions", "CMS-ready build", "2 revision rounds"],
-  },
-  {
-    id: "growth",
-    name: "Growth",
-    price: "$24,000",
-    cadence: "fixed project",
-    featured: true,
-    summary: "A flagship site with signature 3D moments and a measurable conversion focus.",
-    features: ["Up to 14 sections", "Three.js / WebGL hero", "Advanced scroll choreography", "Analytics + A/B ready", "Headless CMS integration", "4 revision rounds"],
-  },
-  {
-    id: "scale",
-    name: "Scale",
-    price: "$10k+",
-    cadence: "per month",
-    summary: "An embedded partner for brands shipping continuously across surfaces.",
-    features: ["Dedicated design + eng pod", "Roadmap & experimentation", "Design system governance", "Priority turnaround", "Quarterly strategy reviews"],
-  },
-];
-
-export const testimonials = [
-  {
-    quote:
-      "We launched in two weeks and had paying customers by week three. Hadron worked with the focus of a team twice its size — and made our redesign feel inevitable.",
-    name: "Sarah Levin",
-    role: "Founder, Juvédé",
-  },
-  {
-    quote:
-      "The hardest part of building a website isn't the code — it's knowing what to leave out. Hadron is the rare studio that solves the problem the visitor actually has.",
-    name: "Marcus Webb",
-    role: "VP Product, Zaine",
-  },
-  {
-    quote:
-      "Structured workflow, fast turnaround, and a finish that made our launch seamless. They've become the trusted partner for every major creative push.",
-    name: "Adrian Cole",
-    role: "CMO, Wall Out",
-  },
-];
-
-export const clients = [
-  "Outside", "Juvédé", "Zaine", "Wall Out", "Geaton", "Skate Dept.", "Northbound", "Atelier 9", "Forma",
-];
-
-export const awards = [
-  { name: "Awwwards", detail: "Site of the Day ×4", year: "2025" },
-  { name: "CSS Design Awards", detail: "Best UI / UX", year: "2025" },
-  { name: "FWA", detail: "Site of the Day", year: "2024" },
-  { name: "Webby", detail: "Honoree", year: "2024" },
+  { k: "01", title: "Talk", body: "A quick chat about what you need, who it's for, and what a win looks like." },
+  { k: "02", title: "Plan & design", body: "A clear plan and a design you sign off on before any code gets written." },
+  { k: "03", title: "Build", body: "Built in the open, with preview links you can click through as it comes together." },
+  { k: "04", title: "Launch", body: "Go live, then fixes and tweaks as real people start using it." },
 ];
 
 export const faqs = [
   {
-    q: "How long does a typical project take?",
-    a: "A Foundation site runs 3–4 weeks. Flagship Growth builds are typically 6–10 weeks depending on the depth of 3D and content. We'll give you a firm timeline in the proposal.",
+    q: "How much does a project cost?",
+    a: "Every project is different, so you get a quote after a short chat about what you need. [Add: a starting price, if you want one shown]",
   },
   {
-    q: "Do you work with our existing team?",
-    a: "Often. We slot in alongside in-house design and product teams, or run end-to-end. Either way you work directly with the people building the thing — no account-manager telephone game.",
+    q: "How long does it take?",
+    a: "[Add: your usual timeline, e.g. how many weeks a simple site takes]",
   },
   {
-    q: "What's included after launch?",
-    a: "Every build ships with documentation and a 30-day warranty. Scale clients keep us on retainer for ongoing design and engineering. Project clients can book us back any time.",
+    q: "Do you build apps as well as websites?",
+    a: "Yes. Hadron builds iOS apps and web apps too. Check the Work page for a few of them.",
   },
   {
-    q: "Can you handle the 3D / WebGL ourselves?",
-    a: "Yes — it's a core competency, not something we outsource. Three.js, React Three Fiber and custom shaders are written in-house by the same engineers building the rest of the site.",
+    q: "Can you make the graphics and video as well?",
+    a: "Yes. Logos, social posts and video edits can be part of the same project, so everything matches.",
   },
   {
-    q: "What does a project need from us?",
-    a: "A decision-maker who can give feedback in one voice, your brand assets, and content (we can help shape it). The tighter the feedback loop, the faster the ship date.",
+    q: "What do you need from me?",
+    a: "Your goals, any logos, photos or text you already have, and quick feedback when a preview is ready.",
   },
 ];
 
 export const values = [
-  { k: "Senior, always", body: "No juniors learning on your budget. The people who scope the work are the people who ship it." },
-  { k: "Strategy before pixels", body: "We earn the right to design by understanding the business first. Pretty that doesn't perform is just expensive." },
-  { k: "Performance is a feature", body: "Fast is part of the brief, not an afterthought. We budget for it from day one and defend it to launch." },
-  { k: "Ship, then sharpen", body: "We get something real in front of people quickly, then refine against reality instead of opinion." },
+  { k: "One maker, start to finish", body: "The person who designs it is the person who builds it. No telephone game." },
+  { k: "Fast is part of the design", body: "Pages should load quickly on a phone, not just look good on a big monitor." },
+  { k: "Show, don't tell", body: "You see working previews early, so feedback is about the real thing." },
+  { k: "Keep learning", body: "New tools, new tricks, tried on side projects before they reach client work." },
 ];
 
-export const team = [
-  {
-    name: "Priya Raman",
-    role: "Studio Principal",
-    bio: "Sets the strategy and keeps every engagement honest. Fifteen years turning fuzzy briefs into sharp products.",
-    photo: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    name: "Noa Brandt",
-    role: "Design Director",
-    bio: "Owns the look and the feel — type, grid, motion. Believes restraint is the hardest design skill.",
-    photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    name: "Eli Mercer",
-    role: "Lead Engineer",
-    bio: "Writes the React, Three.js and shaders. Obsessed with shipping 3D that still scores 98 on a phone.",
-    photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    name: "Dana Okafor",
-    role: "Producer",
-    bio: "Keeps timelines tight and feedback flowing. The reason projects ship on the date we promised.",
-    photo: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=800&q=80",
-  },
+export const toolkit = [
+  "React", "Vite", "Three.js", "Tailwind", "Base44", "iOS", "Adobe Creative Cloud", "DaVinci Resolve",
 ];
 
 export const studioStory = {
-  lead: "Hadron is a small studio by design. We stay senior, take on a handful of projects at a time, and put the people who do the work in the room with you.",
-  body: "We started in 2018, tired of agencies that sold strategy decks and outsourced the build. So we made the opposite: one team that owns the whole arc — positioning, art direction, and production engineering — and is measured on whether the thing actually performs. No translation tax, no telephone game, no hand-off cliff.",
+  lead: "Hadron is a small, independent studio for websites, apps and the content around them.",
+  body: "It started with building things for fun: apps like Cardstok and Supermob, experiments with 3D on the web, and video work. Hadron turns that into client work, with the same person handling design, code and launch. [Add: a sentence or two in your own words about why you started Hadron]",
 };

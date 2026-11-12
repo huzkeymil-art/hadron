@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { nav, studio } from "../data/content.js";
 import { LogoMark } from "./Logo.jsx";
-import { Clock } from "./Clock.jsx";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -16,7 +15,7 @@ export function Footer() {
               <span className="text-xl font-semibold uppercase tracking-tight">Hadron®</span>
             </div>
             <p className="mt-5 text-pretty leading-relaxed text-bone/55">
-              A design & engineering studio building high-impact websites for ambitious brands. Strategy, design and code under one roof.
+              An independent studio for websites, apps and brand content. Design, code and launch, handled by one maker.
             </p>
             <Link
               to="/#contact"
@@ -41,8 +40,8 @@ export function Footer() {
             <a href={`mailto:${studio.email}`} className="link-underline w-fit text-bone/75 hover:text-bone">
               {studio.email}
             </a>
-            <span className="text-bone/55">{studio.phone}</span>
-            <div className="mt-3 flex flex-wrap gap-4">
+            <span className="text-bone/55">{studio.location}</span>
+            {studio.socials.length > 0 && <div className="mt-3 flex flex-wrap gap-4">
               {studio.socials.map((s) => (
                 <a
                   key={s.label}
@@ -55,7 +54,7 @@ export function Footer() {
                   {s.label}
                 </a>
               ))}
-            </div>
+            </div>}
           </div>
         </div>
 
@@ -63,7 +62,6 @@ export function Footer() {
           <p className="font-mono text-xs uppercase tracking-[0.14em] text-bone/45">
             © {year} Hadron Studio — All rights reserved
           </p>
-          <Clock className="font-mono text-xs uppercase tracking-[0.12em] text-bone/45" />
           <p className="font-mono text-xs uppercase tracking-[0.14em] text-bone/45">
             Built with React · Three.js · Node
           </p>

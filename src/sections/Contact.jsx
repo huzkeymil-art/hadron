@@ -6,7 +6,24 @@ import { Magnetic } from "../components/Magnetic.jsx";
 import { Chapter } from "../components/Chapter.jsx";
 import { cn } from "../lib/utils.js";
 
-const BUDGETS = ["< $10k", "$10k–$25k", "$25k–$50k", "$50k+", "Not sure yet"];
+const TYPES = ["Website", "App", "Brand & content", "Not sure yet"];
+
+/** Build a ready-to-send email from the form, used when the server has no
+ *  delivery hook set up, so a message can never silently disappear. */
+function mailtoFor(form) {
+  const subject = `New project enquiry from ${form.name}`;
+  const body = [
+    `Name: ${form.name}`,
+    `Email: ${form.email}`,
+    form.company && `Company: ${form.company}`,
+    form.budget && `Project type: ${form.budget}`,
+    "",
+    form.message,
+  ]
+    .filter((l) => l !== false && l !== undefined && l !== "")
+    .join("\n");
+  return `mailto:${studio.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
 const EMPTY = { name: "", email: "", company: "", budget: "", message: "", _hp: "" };
 
 export function Contact() {
@@ -38,11 +55,17 @@ export function Contact() {
         setStatus("error");
         return;
       }
-      setServerMsg(data.message || "Thanks — we'll be in touch shortly.");
+      if (data.delivered === false) {
+        // No delivery hook on the server yet: hand off to the visitor's email app.
+        window.location.href = mailtoFor(form);
+        setServerMsg(`Your email app should open with the message ready to send. If it doesn't, email ${studio.email}.`);
+      } else {
+        setServerMsg(data.message || "Thanks! I'll get back to you soon.");
+      }
       setStatus("success");
       setForm(EMPTY);
     } catch {
-      setServerMsg("Network error — please email us directly.");
+      setServerMsg(`Network error. Please email ${studio.email} directly.`);
       setStatus("error");
     }
   };
@@ -50,7 +73,7 @@ export function Contact() {
   return (
     <section id="contact" className="relative bg-ink">
       <div className="shell pt-32 md:pt-44">
-        <Chapter index={11} label="Contact" />
+        <Chapter index={5} label="Contact" />
       </div>
       <div className="shell grid gap-14 pb-32 md:pb-44 lg:grid-cols-[1.1fr_0.9fr]">
         {/* Left — pitch */}
@@ -67,7 +90,7 @@ export function Contact() {
               </span>
             </h2>
             <p className="mt-8 max-w-md text-pretty text-lg leading-relaxed text-bone/60">
-              Tell us where you want to be in twelve months. We'll tell you, honestly, whether we're the studio to get you there — usually within 24 hours.
+              Tell me what you want to build. You'll get an honest answer on whether Hadron is the right fit, and what it would take.
             </p>
           </div>
 
@@ -81,14 +104,10 @@ export function Contact() {
               </dd>
             </div>
             <div>
-              <dt className="eyebrow mb-2">Phone</dt>
-              <dd className="text-bone/80">{studio.phone}</dd>
-            </div>
-            <div>
-              <dt className="eyebrow mb-2">Studio</dt>
+              <dt className="eyebrow mb-2">Based</dt>
               <dd className="text-bone/80">{studio.location}</dd>
             </div>
-            <div>
+            {studio.socials.length > 0 && <div>
               <dt className="eyebrow mb-2">Follow</dt>
               <dd className="flex flex-wrap gap-3">
                 {studio.socials.map((s) => (
@@ -97,7 +116,7 @@ export function Contact() {
                   </a>
                 ))}
               </dd>
-            </div>
+            </div>}
           </dl>
         </div>
 
@@ -137,7 +156,7 @@ export function Contact() {
                   <input
                     value={form.name}
                     onChange={update("name")}
-                    placeholder="Jane Appleseed"
+                    placeholder="Your name"
                     className={inputCls(errors.name)}
                   />
                 </Field>
@@ -147,7 +166,7 @@ export function Contact() {
                     type="email"
                     value={form.email}
                     onChange={update("email")}
-                    placeholder="jane@company.com"
+                    placeholder="you@email.com"
                     className={inputCls(errors.email)}
                   />
                 </Field>
@@ -156,14 +175,14 @@ export function Contact() {
                   <input
                     value={form.company}
                     onChange={update("company")}
-                    placeholder="Company / brand"
+                    placeholder="Company or brand (optional)"
                     className={inputCls()}
                   />
                 </Field>
 
-                <Field label="Budget">
+                <Field label="What do you need?">
                   <div className="flex flex-wrap gap-2">
-                    {BUDGETS.map((b) => (
+                    {TYPES.map((b) => (
                       <button
                         type="button"
                         key={b}
@@ -187,7 +206,7 @@ export function Contact() {
                     value={form.message}
                     onChange={update("message")}
                     rows={4}
-                    placeholder="What are you building, and what does success look like?"
+                    placeholder="What are you building, and when do you need it?"
                     className={cn(inputCls(errors.message), "resize-none")}
                   />
                 </Field>

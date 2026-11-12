@@ -5,16 +5,11 @@
 // Routing is configured in /vercel.json, which also builds the static
 // front-end at the repository root.
 
-import { projects, services, pricing, stats } from "../server/content.js";
-import {
-  projects as catalogProjects,
-  projectBySlug,
-  journal,
-  articleBySlug,
-} from "../server/catalog.js";
+import { projects, services } from "../server/content.js";
+import { projects as catalogProjects, projectBySlug } from "../server/catalog.js";
 import { processContact } from "../server/contact-handler.js";
 
-const COLLECTIONS = { projects, services, pricing, stats };
+const COLLECTIONS = { projects, services };
 const stripBody = ({ body, ...rest }) => rest;
 
 export default async function handler(req, res) {
@@ -36,13 +31,6 @@ export default async function handler(req, res) {
     const project = projectBySlug(id);
     if (!project) return res.status(404).json({ ok: false, error: "Project not found" });
     return res.status(200).json({ ok: true, data: project });
-  }
-
-  if (route === "journal") {
-    if (!id) return res.status(200).json({ ok: true, data: journal.map(stripBody) });
-    const article = articleBySlug(id);
-    if (!article) return res.status(404).json({ ok: false, error: "Article not found" });
-    return res.status(200).json({ ok: true, data: article });
   }
 
   if (route === "contact") {
