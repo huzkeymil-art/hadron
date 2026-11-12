@@ -4,22 +4,24 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Fresh look: "lab notebook". `ink` is the page surface and `bone`
+        // the text colour, so the names are kept and only the values flip.
         ink: {
-          DEFAULT: "#070707",
-          900: "#070707",
-          800: "#0e0e0e",
-          700: "#141414",
-          600: "#1b1b1b",
+          DEFAULT: "#f3f1ec",
+          900: "#f3f1ec",
+          800: "#ebe8e1",
+          700: "#e3dfd6",
+          600: "#d8d3c8",
         },
         bone: {
-          DEFAULT: "#f4f1ea",
-          muted: "#cfcbc0",
-          dim: "#8b887f",
+          DEFAULT: "#15161a",
+          muted: "#3d3f45",
+          dim: "#6b6d73",
         },
         ember: {
-          DEFAULT: "#ff3d00",
-          bright: "#ff4d12",
-          deep: "#e2330a",
+          DEFAULT: "#2b4bff",
+          bright: "#4361ff",
+          deep: "#1d36d4",
         },
       },
       fontFamily: {
@@ -31,13 +33,14 @@ export default {
           "sans-serif",
         ],
         display: [
-          "Space Grotesk",
+          "Fraunces",
+          "Georgia",
           "Inter",
           "Helvetica Neue",
           "system-ui",
           "sans-serif",
         ],
-        serif: ["Instrument Serif", "Georgia", "serif"],
+        serif: ["Fraunces", "Georgia", "serif"],
         mono: [
           "IBM Plex Mono",
           "JetBrains Mono",

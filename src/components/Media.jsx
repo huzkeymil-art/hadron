@@ -6,7 +6,7 @@ import { cn } from "../lib/utils.js";
  * to the photo once it loads. If the image fails entirely, the tinted block
  * remains, so layouts never collapse into broken-image icons.
  */
-export function Media({ src, alt, accent = "#1d1d1d", className, imgClassName, priority = false }) {
+export function Media({ src, alt, accent = "#c9c4b8", className, imgClassName, priority = false }) {
   const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(false);
 
@@ -17,7 +17,7 @@ export function Media({ src, alt, accent = "#1d1d1d", className, imgClassName, p
         className="absolute inset-0 transition-opacity duration-[1200ms] ease-expo"
         style={{
           opacity: loaded ? 0 : 1,
-          background: `radial-gradient(120% 120% at 30% 20%, ${accent}22, #111 70%)`,
+          background: `radial-gradient(120% 120% at 30% 20%, ${accent}22, #e3dfd6 70%)`,
         }}
       />
       {!failed && (

@@ -1,45 +1,80 @@
+import { useReducedMotion } from "framer-motion";
+
 /**
- * Static, dependency-free hero backdrop shown when WebGL is unavailable, while
- * the 3D scene loads, or for visitors who prefer reduced motion. A still frame
- * of the black hole: event horizon, photon ring, and an angled accretion disk
- * — so the brand reads even without Three.js.
+ * Fresh look hero art: a hadron drawn like a diagram in a lab notebook.
+ * Three orbits in fine ink, one nucleus, and particles tracing the orbits.
+ * Pure SVG — no Three.js download, works on every phone. Particles hold
+ * still for visitors who prefer reduced motion.
  */
-export function HeroFallback({ color = "#ff3d00" }) {
+const ORBITS = [0, 60, 120];
+
+export function HeroFallback({ color = "#2b4bff", align = "end" }) {
+  const reduce = useReducedMotion();
+
   return (
-    <div className="absolute inset-0 flex items-center justify-center overflow-hidden bg-ink md:justify-end md:pr-[10%]">
-      {/* ambient plasma glow */}
-      <div
-        className="absolute h-[52vh] w-[52vh] rounded-full blur-[130px]"
-        style={{ backgroundColor: `${color}26` }}
-      />
-      <svg viewBox="0 0 400 400" className="h-[72vh] w-[72vh] max-w-none" aria-hidden>
-        <defs>
-          <linearGradient id="bh-disk" x1="0%" y1="50%" x2="100%" y2="50%">
-            <stop offset="0%" stopColor={color} stopOpacity="0" />
-            <stop offset="30%" stopColor={color} stopOpacity="0.75" />
-            <stop offset="55%" stopColor="#fff3ea" stopOpacity="0.9" />
-            <stop offset="80%" stopColor={color} stopOpacity="0.55" />
-            <stop offset="100%" stopColor={color} stopOpacity="0" />
-          </linearGradient>
-          <radialGradient id="bh-halo" cx="50%" cy="50%" r="50%">
-            <stop offset="55%" stopColor="#000000" stopOpacity="0.9" />
-            <stop offset="100%" stopColor="#000000" stopOpacity="0" />
-          </radialGradient>
-        </defs>
+    <div
+      className={`absolute inset-0 flex items-center justify-center overflow-hidden ${
+        align === "end" ? "md:justify-end md:pr-[6%]" : ""
+      }`}
+    >
+      <svg viewBox="0 0 400 400" className="h-[min(78vh,88vw)] w-[min(78vh,88vw)] max-w-none opacity-90" aria-hidden>
+        {/* measurement ticks around the edge, like a protractor */}
+        <g stroke="#15161a" strokeOpacity="0.25">
+          {Array.from({ length: 72 }).map((_, i) => {
+            const a = (i * 5 * Math.PI) / 180;
+            const r1 = 186;
+            const r2 = i % 6 === 0 ? 174 : 180;
+            return (
+              <line
+                key={i}
+                x1={200 + r1 * Math.cos(a)}
+                y1={200 + r1 * Math.sin(a)}
+                x2={200 + r2 * Math.cos(a)}
+                y2={200 + r2 * Math.sin(a)}
+                strokeWidth="1"
+              />
+            );
+          })}
+        </g>
+        <circle cx="200" cy="200" r="186" fill="none" stroke="#15161a" strokeOpacity="0.15" />
 
-        {/* gravitational darkening */}
-        <circle cx="200" cy="200" r="150" fill="url(#bh-halo)" />
+        {ORBITS.map((deg, i) => (
+          <g key={deg} transform={`rotate(${deg} 200 200)`}>
+            <ellipse
+              id={`orbit-${i}`}
+              cx="200"
+              cy="200"
+              rx="150"
+              ry="52"
+              fill="none"
+              stroke="#15161a"
+              strokeOpacity="0.55"
+              strokeWidth="1.1"
+            />
+            <circle r="5.5" fill={color} cx={reduce ? 350 : 0} cy={reduce ? 200 : 0}>
+              {!reduce && (
+                <animateMotion
+                  dur={`${7 + i * 2.5}s`}
+                  repeatCount="indefinite"
+                  begin={`${-i * 1.7}s`}
+                  path="M 350 200 A 150 52 0 1 1 50 200 A 150 52 0 1 1 350 200"
+                />
+              )}
+            </circle>
+          </g>
+        ))}
 
-        {/* accretion disk — angled ellipse passing behind and in front */}
-        <ellipse cx="200" cy="204" rx="150" ry="34" stroke="url(#bh-disk)" strokeWidth="7" fill="none" opacity="0.85" />
+        {/* nucleus: three quarks */}
+        <circle cx="200" cy="200" r="26" fill="none" stroke={color} strokeWidth="1.4" />
+        <circle cx="192" cy="194" r="7" fill={color} />
+        <circle cx="209" cy="195" r="7" fill="#15161a" />
+        <circle cx="200" cy="209" r="7" fill={color} fillOpacity="0.45" />
 
-        {/* lensed arc bowing over the top */}
-        <path d="M 132 156 A 82 82 0 0 1 268 156" stroke="#ffd9c2" strokeWidth="2.5" fill="none" opacity="0.5" strokeLinecap="round" />
-
-        {/* event horizon + photon ring */}
-        <circle cx="200" cy="200" r="62" fill="#000000" />
-        <circle cx="200" cy="200" r="64" stroke="#ffddc8" strokeWidth="1.4" fill="none" opacity="0.8" />
-        <circle cx="200" cy="200" r="67" stroke={color} strokeWidth="1.6" fill="none" opacity="0.45" />
+        {/* annotation */}
+        <g fontFamily="IBM Plex Mono, monospace" fontSize="8" fill="#15161a" fillOpacity="0.55" letterSpacing="1">
+          <text x="236" y="168">FIG. 1 — HADRON</text>
+          <line x1="226" y1="174" x2="232" y2="170" stroke="#15161a" strokeOpacity="0.4" />
+        </g>
       </svg>
     </div>
   );

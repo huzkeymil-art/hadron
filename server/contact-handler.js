@@ -32,20 +32,29 @@ export function validateContact(body = {}) {
   };
 }
 
-/** Forward a valid submission to a webhook if configured, else log it. */
+/**
+ * Forward a valid submission to a webhook if one is configured.
+ * Returns true only when it was actually handed off; false tells the browser
+ * to fall back to opening the visitor's email app, so no enquiry is lost.
+ *
+ * To turn on direct delivery, set CONTACT_WEBHOOK_URL in Vercel's environment
+ * variables (e.g. a Zapier/Make/Formspree webhook that emails you).
+ */
 export async function deliver(submission) {
-  if (process.env.CONTACT_WEBHOOK_URL) {
-    try {
-      await fetch(process.env.CONTACT_WEBHOOK_URL, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(submission),
-      });
-    } catch (err) {
-      console.error("[contact] webhook delivery failed:", err.message);
-    }
-  } else {
-    console.log("[contact] new enquiry:", JSON.stringify(submission));
+  if (!process.env.CONTACT_WEBHOOK_URL) {
+    console.log("[contact] no webhook set; asking browser to use email instead");
+    return false;
+  }
+  try {
+    const res = await fetch(process.env.CONTACT_WEBHOOK_URL, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(submission),
+    });
+    return res.ok;
+  } catch (err) {
+    console.error("[contact] webhook delivery failed:", err.message);
+    return false;
   }
 }
 
@@ -54,9 +63,9 @@ export async function processContact(body = {}) {
   const result = validateContact(body);
   if (result.honeypot) return { status: 200, body: { ok: true, queued: true } };
   if (result.errors) return { status: 422, body: { ok: false, errors: result.errors } };
-  await deliver(result.submission);
+  const delivered = await deliver(result.submission);
   return {
     status: 200,
-    body: { ok: true, id: result.submission.id, message: "Thanks — we'll be in touch within 24 hours." },
+    body: { ok: true, delivered, id: result.submission.id, message: "Thanks! I'll get back to you soon." },
   };
 }

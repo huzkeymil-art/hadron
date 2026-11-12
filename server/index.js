@@ -6,9 +6,9 @@ import morgan from "morgan";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { projects, services, pricing, stats } from "./content.js";
-import { projects as catalogProjects, projectBySlug, journal, articleBySlug } from "./catalog.js";
-import { validateContact, deliver } from "./contact-handler.js";
+import { projects, services } from "./content.js";
+import { projects as catalogProjects, projectBySlug } from "./catalog.js";
+import { processContact } from "./contact-handler.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const isProd = process.env.NODE_ENV === "production";
@@ -62,10 +62,8 @@ api.get("/health", (_req, res) => {
 // Content endpoints — the front-end can hydrate from these (Node as a real backend).
 api.get("/projects", (_req, res) => res.json({ ok: true, data: projects }));
 api.get("/services", (_req, res) => res.json({ ok: true, data: services }));
-api.get("/pricing", (_req, res) => res.json({ ok: true, data: pricing }));
-api.get("/stats", (_req, res) => res.json({ ok: true, data: stats }));
 
-// Full case studies and articles (mirror the /work and /journal pages).
+// Full project pages (mirror /work).
 api.get("/work", (_req, res) =>
   res.json({ ok: true, data: catalogProjects.map(({ body, ...summary }) => summary) })
 );
@@ -74,26 +72,10 @@ api.get("/work/:slug", (req, res) => {
   if (!project) return res.status(404).json({ ok: false, error: "Project not found" });
   res.json({ ok: true, data: project });
 });
-api.get("/journal", (_req, res) =>
-  res.json({ ok: true, data: journal.map(({ body, ...summary }) => summary) })
-);
-api.get("/journal/:slug", (req, res) => {
-  const article = articleBySlug(req.params.slug);
-  if (!article) return res.status(404).json({ ok: false, error: "Article not found" });
-  res.json({ ok: true, data: article });
-});
 
 api.post("/contact", rateLimit, async (req, res) => {
-  const result = validateContact(req.body ?? {});
-  if (result.honeypot) return res.json({ ok: true, queued: true });
-  if (result.errors) return res.status(422).json({ ok: false, errors: result.errors });
-
-  await deliver({ ...result.submission, ip: req.ip });
-  res.json({
-    ok: true,
-    id: result.submission.id,
-    message: "Thanks — we'll be in touch within 24 hours.",
-  });
+  const { status, body } = await processContact(req.body ?? {});
+  res.status(status).json(body);
 });
 
 app.use("/api", api);
